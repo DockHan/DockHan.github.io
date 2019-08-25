@@ -78,7 +78,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="数据结构,算法,">
 
 
 
@@ -94,17 +94,18 @@
 
 
 
-<meta name="description" content="Zhiyuan&apos;s blog">
-<meta name="keywords" content="selfdriving, autotest,life">
-<meta property="og:type" content="website">
-<meta property="og:title" content="On the way">
-<meta property="og:url" content="http://yoursite.com/archives/index.html">
+<meta name="description" content="分治策略 三个步骤  分解(Divide)：将问题划分为规模更小的子问题 解决(Conquer)：递归的求解出子问题，如果子问题规模足够小，则停止递归，直接求解 合并(Combine)：将子问题的解组合成原问题的解   求解函数  T(n) =  \begin{cases}     \Omega(n), &amp; if\ n\ =\ 1\ \\     2T(\cfrac{n}{2}) + \Omega">
+<meta name="keywords" content="数据结构,算法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="第三章-分治策略">
+<meta property="og:url" content="http://yoursite.com/2019/08/25/分治策略/index.html">
 <meta property="og:site_name" content="On the way">
-<meta property="og:description" content="Zhiyuan&apos;s blog">
+<meta property="og:description" content="分治策略 三个步骤  分解(Divide)：将问题划分为规模更小的子问题 解决(Conquer)：递归的求解出子问题，如果子问题规模足够小，则停止递归，直接求解 合并(Combine)：将子问题的解组合成原问题的解   求解函数  T(n) =  \begin{cases}     \Omega(n), &amp; if\ n\ =\ 1\ \\     2T(\cfrac{n}{2}) + \Omega">
 <meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-08-25T00:10:09.051Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="On the way">
-<meta name="twitter:description" content="Zhiyuan&apos;s blog">
+<meta name="twitter:title" content="第三章-分治策略">
+<meta name="twitter:description" content="分治策略 三个步骤  分解(Divide)：将问题划分为规模更小的子问题 解决(Conquer)：递归的求解出子问题，如果子问题规模足够小，则停止递归，直接求解 合并(Combine)：将子问题的解组合成原问题的解   求解函数  T(n) =  \begin{cases}     \Omega(n), &amp; if\ n\ =\ 1\ \\     2T(\cfrac{n}{2}) + \Omega">
 
 
 
@@ -133,13 +134,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/archives/">
+  <link rel="canonical" href="http://yoursite.com/2019/08/25/分治策略/">
 
 
 
 
 
-  <title>Archive | On the way</title>
+  <title>第三章-分治策略 | On the way</title>
   
 
 
@@ -164,7 +165,7 @@
     
   
 
-  <div class="container sidebar-position-left  page-archive  ">
+  <div class="container sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -268,142 +269,207 @@
           <div id="content" class="content">
             
 
+  <div id="posts" class="posts-expand">
+    
+
+  
+
   
   
   
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
-
-      <span class="archive-page-counter">
-        
-        
-        
-          
-        
-        Um..! 3 posts in total. Keep on posting.
-      </span>
-
-      
-
-        
-        
-        
-
-        
-          
-          <div class="collection-title">
-            <h2 class="archive-year motion-element" id="archive-year-2019">2019</h2>
-          </div>
-        
-        
-
-        
 
   <article class="post post-type-home" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/25/分治策略/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zhiyuan Han">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="On the way">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2019/08/25/分治策略/" itemprop="url">
-              
-                <span itemprop="name">第三章-分治策略</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">第三章-分治策略</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-08-25T06:58:47+08:00" content="2019-08-25">
-          08-25
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-08-25T06:58:47+08:00">
+                2019-08-25
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
 
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/算法导论/" itemprop="url" rel="index">
+                    <span itemprop="name">算法导论</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-home, category" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/08/24/First-Page/" itemprop="url">
-              
-                <span itemprop="name">First Page</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-08-24T23:39:01+08:00" content="2019-08-24">
-          08-24
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
 
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/08/24/hello-world/" itemprop="url">
-              
-                <span itemprop="name">Hello World</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-08-24T22:23:19+08:00" content="2019-08-24">
-          08-24
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
+      
+        <h2 id="分治策略"><a href="#分治策略" class="headerlink" title="分治策略"></a>分治策略</h2><ul>
+<li><p>三个步骤</p>
+<ol>
+<li>分解(Divide)：将问题划分为规模更小的子问题</li>
+<li>解决(Conquer)：递归的求解出子问题，如果子问题规模足够小，则停止递归，直接求解</li>
+<li>合并(Combine)：将子问题的解组合成原问题的解</li>
+</ol>
+</li>
+<li><p>求解函数</p>
+<script type="math/tex; mode=display">
+T(n) = 
+\begin{cases}
+    \Omega(n), & if\ n\ =\ 1\ \\
+    2T(\cfrac{n}{2}) + \Omega(n), & if\ n\ >\ 1
+\end{cases}</script><ul>
+<li>如何求解该方法的复杂度为 $\theta(nlgn)$,可以参考如下分解过程<ol>
+<li>假设c用于表示求解规模为1所需要的时间以及在分解合并过程中需要需要的时间</li>
+<li>那么 总体就是cn，分解： $T(\cfrac{n}{2})$ $\cfrac{n}{2}$ —-&gt;继续分解$\cfrac{n}{4}$ $\cfrac{n}{4}$ $\cfrac{n}{4}$ $\cfrac{n}{4}$,依次以$\log_2n$的方式分解</li>
+<li>so 复杂度为 $\theta(nlgn)$</li>
+</ol>
+</li>
+</ul>
+</li>
+<li><p>问题示例</p>
+<ul>
+<li>[x] 最大子串 (maximum subarray)</li>
+<li>[ ] 思考如何使用分治策略得到最大子串的一个最优解</li>
+</ul>
+</li>
+</ul>
+<h3 id="知识扩展"><a href="#知识扩展" class="headerlink" title="知识扩展"></a>知识扩展</h3><ul>
+<li>排列组合问题<ol>
+<li>排列的定义：从n个不同的元素中，任取m($m \lt= n$, m n均为自然数)个数按照一定的顺序排列成一列，叫做从n个不同元素中取出m个元素排成一列； 符号 $A_n^m$ 表示。<script type="math/tex; mode=display">A_n^m = n(n-1)(n-2)\cdots(n-m+1) = \cfrac{n!}{(n-m)!}</script></li>
+<li>组合的定义： 从n个不同的元素中，任取m($m \lt= n$, m n均为自然数)个数组成一个组合，组合是无序的，公式：<script type="math/tex; mode=display">C_n^m = \frac{A_n^m}{m!} = \cfrac{n!}{m!(n-m)!}</script></li>
+</ol>
+</li>
+</ul>
 
       
-
     </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/数据结构/" rel="tag"># 数据结构</a>
+          
+            <a href="/tags/算法/" rel="tag"># 算法</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/08/24/First-Page/" rel="next" title="First Page">
+                <i class="fa fa-chevron-left"></i> First Page
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -411,6 +477,10 @@
 
 
           
+  <div class="comments" id="comments">
+    
+  </div>
+
 
         </div>
         
@@ -431,8 +501,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image" src="/images/avatar.gif" alt="Zhiyuan Han">
           <p class="site-author-name" itemprop="name">Zhiyuan Han</p>
@@ -492,6 +571,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#分治策略"><span class="nav-number">1.</span> <span class="nav-text">分治策略</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#知识扩展"><span class="nav-number">1.1.</span> <span class="nav-text">知识扩展</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -612,11 +707,9 @@
 
 
   
-  
-    <script type="text/javascript" id="motion.page.archive">
-      $('.archive-year').velocity('transition.slideLeftIn');
-    </script>
-  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
 
 
   
