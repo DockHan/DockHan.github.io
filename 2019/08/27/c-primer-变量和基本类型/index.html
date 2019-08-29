@@ -78,7 +78,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
 
 
-  <meta name="keywords" content="数据结构,算法,">
+  <meta name="keywords" content="c plus plus,">
 
 
 
@@ -94,18 +94,18 @@
 
 
 
-<meta name="description" content="分治策略 三个步骤  分解(Divide)：将问题划分为规模更小的子问题 解决(Conquer)：递归的求解出子问题，如果子问题规模足够小，则停止递归，直接求解 合并(Combine)：将子问题的解组合成原问题的解   求解函数  T(n) =  \begin{cases}     \Omega(n), &amp; if\ n\ =\ 1\ \\     2T(\cfrac{n}{2}) + \Omega">
-<meta name="keywords" content="数据结构,算法">
+<meta name="description" content="变量和基本数据类型 内置类型的机器级表示 通常一个内置类型，比如int在内存中(32bit的处理器)，一般占用4个字节的存储空间（也称为Word), So 取值范围是 $1- 2^32 ——- 2^32$，如果一段for循环如下，会进入死循环： 1234for(unsigned int i = 0; i &amp;lt; xxx; i++)&amp;#123;  // 当i 超过int的最大范围时， i值%int">
+<meta name="keywords" content="c plus plus">
 <meta property="og:type" content="article">
-<meta property="og:title" content="第三章-分治策略">
-<meta property="og:url" content="http://yoursite.com/2019/08/25/分治策略/index.html">
+<meta property="og:title" content="c++ primer 变量和基本类型">
+<meta property="og:url" content="http://yoursite.com/2019/08/27/c-primer-变量和基本类型/index.html">
 <meta property="og:site_name" content="On the way">
-<meta property="og:description" content="分治策略 三个步骤  分解(Divide)：将问题划分为规模更小的子问题 解决(Conquer)：递归的求解出子问题，如果子问题规模足够小，则停止递归，直接求解 合并(Combine)：将子问题的解组合成原问题的解   求解函数  T(n) =  \begin{cases}     \Omega(n), &amp; if\ n\ =\ 1\ \\     2T(\cfrac{n}{2}) + \Omega">
+<meta property="og:description" content="变量和基本数据类型 内置类型的机器级表示 通常一个内置类型，比如int在内存中(32bit的处理器)，一般占用4个字节的存储空间（也称为Word), So 取值范围是 $1- 2^32 ——- 2^32$，如果一段for循环如下，会进入死循环： 1234for(unsigned int i = 0; i &amp;lt; xxx; i++)&amp;#123;  // 当i 超过int的最大范围时， i值%int">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-08-28T14:25:03.290Z">
+<meta property="og:updated_time" content="2019-08-29T14:15:37.133Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="第三章-分治策略">
-<meta name="twitter:description" content="分治策略 三个步骤  分解(Divide)：将问题划分为规模更小的子问题 解决(Conquer)：递归的求解出子问题，如果子问题规模足够小，则停止递归，直接求解 合并(Combine)：将子问题的解组合成原问题的解   求解函数  T(n) =  \begin{cases}     \Omega(n), &amp; if\ n\ =\ 1\ \\     2T(\cfrac{n}{2}) + \Omega">
+<meta name="twitter:title" content="c++ primer 变量和基本类型">
+<meta name="twitter:description" content="变量和基本数据类型 内置类型的机器级表示 通常一个内置类型，比如int在内存中(32bit的处理器)，一般占用4个字节的存储空间（也称为Word), So 取值范围是 $1- 2^32 ——- 2^32$，如果一段for循环如下，会进入死循环： 1234for(unsigned int i = 0; i &amp;lt; xxx; i++)&amp;#123;  // 当i 超过int的最大范围时， i值%int">
 
 
 
@@ -134,13 +134,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/08/25/分治策略/">
+  <link rel="canonical" href="http://yoursite.com/2019/08/27/c-primer-变量和基本类型/">
 
 
 
 
 
-  <title>第三章-分治策略 | On the way</title>
+  <title>c++ primer 变量和基本类型 | On the way</title>
   
 
 
@@ -283,7 +283,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/25/分治策略/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/27/c-primer-变量和基本类型/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Zhiyuan Han">
@@ -300,7 +300,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">第三章-分治策略</h1>
+          <h1 class="post-title" itemprop="name headline">c++ primer 变量和基本类型</h1>
         
 
         <div class="post-meta">
@@ -312,8 +312,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-08-25T06:58:47+08:00">
-                2019-08-25
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-08-27T10:30:44+08:00">
+                2019-08-27
               </time>
             
 
@@ -335,8 +335,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/算法导论/" itemprop="url" rel="index">
-                    <span itemprop="name">算法导论</span>
+                  <a href="/categories/c-plus-plus-primer/" itemprop="url" rel="index">
+                    <span itemprop="name">c plus plus primer</span>
                   </a>
                 </span>
 
@@ -372,58 +372,39 @@
       
 
       
-        <h2 id="分治策略"><a href="#分治策略" class="headerlink" title="分治策略"></a>分治策略</h2><ul>
-<li><p>三个步骤</p>
-<ol>
-<li>分解(Divide)：将问题划分为规模更小的子问题</li>
-<li>解决(Conquer)：递归的求解出子问题，如果子问题规模足够小，则停止递归，直接求解</li>
-<li>合并(Combine)：将子问题的解组合成原问题的解</li>
-</ol>
+        <h2 id="变量和基本数据类型"><a href="#变量和基本数据类型" class="headerlink" title="变量和基本数据类型"></a>变量和基本数据类型</h2><hr>
+<h3 id="内置类型的机器级表示"><a href="#内置类型的机器级表示" class="headerlink" title="内置类型的机器级表示"></a>内置类型的机器级表示</h3><ol>
+<li><p>通常一个内置类型，比如int在内存中(32bit的处理器)，一般占用4个字节的存储空间（也称为Word), So 取值范围是 $1- 2^32 ——- 2^32$，如果一段for循环如下，会进入死循环：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">for(unsigned int i = 0; i &lt; xxx; i++)</span><br><span class="line">&#123;</span><br><span class="line">  // 当i 超过int的最大范围时， i值%int.MaxValue取模，导致进入死循环</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>求解函数</p>
-<script type="math/tex; mode=display">
-T(n) = 
-\begin{cases}
-    \Omega(n), & if\ n\ =\ 1\ \\
-    2T(\cfrac{n}{2}) + \Omega(n), & if\ n\ >\ 1
-\end{cases}</script><ul>
-<li>如何求解该方法的复杂度为 $\theta(nlgn)$,可以参考如下分解过程<ol>
-<li>假设c用于表示求解规模为1所需要的时间以及在分解合并过程中需要需要的时间</li>
-<li>那么 总体就是cn，分解： $T(\cfrac{n}{2})$ $\cfrac{n}{2}$ —-&gt;继续分解$\cfrac{n}{4}$ $\cfrac{n}{4}$ $\cfrac{n}{4}$ $\cfrac{n}{4}$,依次以$\log_2n$的方式分解</li>
-<li>so 复杂度为 $\theta(nlgn)$</li>
-</ol>
+<li><p>变量的初始化<br>复制初始化和直接初始化，如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">int a = 10;  // 复制初始化</span><br><span class="line">int b(1024); // 直接初始化</span><br></pre></td></tr></table></figure>
 </li>
-</ul>
+<li><p>尽量使用const<br>const修饰的变量不可被修改，因此必须在定义的时候就进行初始化</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">const int PI = 3.1415926; // PI 不可再被程序的其他位置修改其值</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>问题示例</p>
+<li><p>引用 reference</p>
 <ul>
-<li>[x] 最大子串 (maximum subarray)， 假设整个数组的$A[low, high]$</li>
-<li>[ ] 思考如何使用分治策略得到最大子串的一个最优解</li>
-<li><p>回答： 将问题分解为规模更小的几个步骤：比如选取中间mid序号，将子数组问题分解为两个规模尽量相等的子数组， 那么存在如下三种可能</p>
-<ol>
-<li>最大子数组位于$A[low, mid]$之中,因此 $low \le i \le j \le high$</li>
-<li>最大子数组位于$A[mid + 1, high]$之中，因此 $mid \lt i \le j \le high$</li>
-<li>还有一种情况是跨越了中点mid, 因此 $low \le i \le mid \le j \le high$<ul>
-<li>求解第三步骤：实际就是已mid为分隔，分别向两侧计算最大子串后，然后合并即可，伪代码如下，返回为i, j, max_value<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">FIND_MAX_CORSSING_SUBARRAY(A, low, mid, high):</span><br><span class="line">  left_sum = -int.MAX</span><br><span class="line">  sum = 0</span><br><span class="line">  for i = mid downto low:</span><br><span class="line">    sum = sum + A[i]</span><br><span class="line">    if sum &gt; left_sum:</span><br><span class="line">      left_sum = sum</span><br><span class="line">      max_left = i</span><br><span class="line">  </span><br><span class="line">  right_sum = -int.MAX</span><br><span class="line">  sum = 0</span><br><span class="line">  for j = mid + 1 to high:</span><br><span class="line">    sum = sum + A[j]</span><br><span class="line">    if sum &gt; right_sum:</span><br><span class="line">      right_sum = sum</span><br><span class="line">      max_right = j</span><br><span class="line">  return (max_left, max_right, left_sum + right_sum)</span><br></pre></td></tr></table></figure>
+<li>就是对象的另外一个名字，在实际应用中主要用作函数的形式参数；</li>
+<li><p>引用是一种复合类型(compound type)，通过在变量名称前添加&amp;符号来定义</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">int ival = 1024;</span><br><span class="line">int &amp;ref_val = ival; // OK , ref_val refers ival</span><br><span class="line">int &amp;ref_val2;       // error, a reference must be initialized</span><br><span class="line">int &amp;ref_val3 = 10; // error, initializer must be an object</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>引用其实就是一个对象的别名，所有作用在该引用上的操作都会对该引用的对象进行影响。</p>
 </li>
 </ul>
 </li>
+<li><strong>const 引用</strong><ul>
+<li>即可以读取，但是不可修改引用对象的内容 </li>
+</ul>
+</li>
+<li>typedef 名字<ul>
+<li>为了隐藏特定类型的实现，强调类型使用的目的</li>
+<li>为了简化复杂类型的定义，使其更容易理解</li>
+<li>运行一种类型用于多个目的，同事使得每次改类型的目的</li>
+</ul>
+</li>
+<li>Enum 枚举</li>
 </ol>
-<ul>
-<li>有了总体的分析，所有程序的伪代码如下<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">FIND_MAXIMUM_SUMARRAY(A, low, high)</span><br><span class="line">  if hight == low:</span><br><span class="line">    return (low, high, A[low])</span><br><span class="line">  else mid = [(low+high)/2]</span><br><span class="line">    (left_low, left_high, left_sum) = FIND_MAXIMUM_SUMARRAY(A, low, mid)</span><br><span class="line">    (right_low, right_high, right_sum) = FIND_MAXIMUM_SUMARRAY(A, mid + 1, high)</span><br><span class="line">    (cross_low, cross_high, cross_sum) = FIND_MAX_CORSSING_SUBARRAY(A, low, mid, high)</span><br><span class="line"></span><br><span class="line">    if left_sum &gt;= right_sum and cross_sum &gt;= cross_sum:</span><br><span class="line">      return (left_low, left_high, left_sum)</span><br><span class="line">    else right_sum &gt;= left_sum and right_sm &gt;= cross_sum:</span><br><span class="line">      return (right_low, right_high, right_sum)</span><br><span class="line">    else return (cross_low, cross_high, cross_sum)</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h3 id="知识扩展"><a href="#知识扩展" class="headerlink" title="知识扩展"></a>知识扩展</h3><ul>
-<li>排列组合问题<ol>
-<li>排列的定义：从n个不同的元素中，任取m($m \lt= n$, m n均为自然数)个数按照一定的顺序排列成一列，叫做从n个不同元素中取出m个元素排成一列； 符号 $A_n^m$ 表示。<script type="math/tex; mode=display">A_n^m = n(n-1)(n-2)\cdots(n-m+1) = \cfrac{n!}{(n-m)!}</script></li>
-<li>组合的定义： 从n个不同的元素中，任取m($m \lt= n$, m n均为自然数)个数组成一个组合，组合是无序的，公式：<script type="math/tex; mode=display">C_n^m = \frac{A_n^m}{m!} = \cfrac{n!}{m!(n-m)!}</script></li>
-</ol>
-</li>
-</ul>
 
       
     </div>
@@ -441,9 +422,7 @@ T(n) =
       
         <div class="post-tags">
           
-            <a href="/tags/数据结构/" rel="tag"># 数据结构</a>
-          
-            <a href="/tags/算法/" rel="tag"># 算法</a>
+            <a href="/tags/c-plus-plus/" rel="tag"># c plus plus</a>
           
         </div>
       
@@ -456,8 +435,8 @@ T(n) =
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/08/24/First-Page/" rel="next" title="First Page">
-                <i class="fa fa-chevron-left"></i> First Page
+              <a href="/2019/08/27/index/" rel="next" title="矩阵相乘">
+                <i class="fa fa-chevron-left"></i> 矩阵相乘
               </a>
             
           </div>
@@ -466,8 +445,8 @@ T(n) =
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/08/27/index/" rel="prev" title="矩阵相乘">
-                矩阵相乘 <i class="fa fa-chevron-right"></i>
+              <a href="/2019/08/28/测试开发Python面试/" rel="prev" title="测试开发Python面试">
+                测试开发Python面试 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -600,7 +579,7 @@ T(n) =
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#分治策略"><span class="nav-number">1.</span> <span class="nav-text">分治策略</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#知识扩展"><span class="nav-number">1.1.</span> <span class="nav-text">知识扩展</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#变量和基本数据类型"><span class="nav-number">1.</span> <span class="nav-text">变量和基本数据类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#内置类型的机器级表示"><span class="nav-number">1.1.</span> <span class="nav-text">内置类型的机器级表示</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -778,26 +757,6 @@ T(n) =
   
 
   
-  
-    <script type="text/x-mathjax-config">
-      MathJax.Hub.Config({
-        tex2jax: {
-          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
-          processEscapes: true,
-          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-        }
-      });
-    </script>
-
-    <script type="text/x-mathjax-config">
-      MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax(), i;
-        for (i=0; i < all.length; i += 1) {
-          all[i].SourceElement().parentNode.className += ' has-jax';
-        }
-      });
-    </script>
-    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
   
 
 
