@@ -102,7 +102,7 @@
 <meta property="og:site_name" content="On the way">
 <meta property="og:description" content="快速排序 求解分析使用分治策略对排序任务进行划分：  假设输入数组的 A[p, r]  可以将数组划分为 A[p, q - 1] 和 A[q + 1, r] 使得前一个数组的内容都小于等于A[q],后一个数组的内容都大于等于A[q] 这样问题就被划分为两个子问题，继续对子数组进行递归调用的过程 合并: 由于子数组都是原址排序，所以不需要合并操作，即A[p,r]已经是有序的 伪代码如下 12345d">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-08-29T16:38:35.548Z">
+<meta property="og:updated_time" content="2019-08-29T16:42:11.667Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="quick_sort">
 <meta name="twitter:description" content="快速排序 求解分析使用分治策略对排序任务进行划分：  假设输入数组的 A[p, r]  可以将数组划分为 A[p, q - 1] 和 A[q + 1, r] 使得前一个数组的内容都小于等于A[q],后一个数组的内容都大于等于A[q] 这样问题就被划分为两个子问题，继续对子数组进行递归调用的过程 合并: 由于子数组都是原址排序，所以不需要合并操作，即A[p,r]已经是有序的 伪代码如下 12345d">
@@ -747,6 +747,26 @@
   
 
   
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
   
 
 
