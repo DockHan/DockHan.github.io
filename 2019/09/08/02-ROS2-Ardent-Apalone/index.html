@@ -78,7 +78,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
 
 
-  <meta name="keywords" content="数据结构,算法,">
+  <meta name="keywords" content="ROS2,">
 
 
 
@@ -94,18 +94,21 @@
 
 
 
-<meta name="description" content="分治策略 三个步骤  分解(Divide)：将问题划分为规模更小的子问题 解决(Conquer)：递归的求解出子问题，如果子问题规模足够小，则停止递归，直接求解 合并(Combine)：将子问题的解组合成原问题的解   求解函数  T(n) =  \begin{cases}     \Omega(n), &amp; if\ n\ =\ 1\ \\     2T(\cfrac{n}{2}) + \Omega">
-<meta name="keywords" content="数据结构,算法">
+<meta name="description" content="引用：   古月居 ros1 wiki ros2 wiki ROS2安装说明   ROS2的介绍,与ROS1的区别  ROS (Robot Operating System)机器人操作系统，主要分为两代release: ROS1 (代号 Kinetic/indigo): http://wiki.ros.org ROS2 (代号 Ardent Apolane): http://github.com">
+<meta name="keywords" content="ROS2">
 <meta property="og:type" content="article">
-<meta property="og:title" content="第三章-分治策略">
-<meta property="og:url" content="http://yoursite.com/2019/08/25/分治策略/index.html">
+<meta property="og:title" content="02 ROS2 Ardent Apalone">
+<meta property="og:url" content="http://yoursite.com/2019/09/08/02-ROS2-Ardent-Apalone/index.html">
 <meta property="og:site_name" content="On the way">
-<meta property="og:description" content="分治策略 三个步骤  分解(Divide)：将问题划分为规模更小的子问题 解决(Conquer)：递归的求解出子问题，如果子问题规模足够小，则停止递归，直接求解 合并(Combine)：将子问题的解组合成原问题的解   求解函数  T(n) =  \begin{cases}     \Omega(n), &amp; if\ n\ =\ 1\ \\     2T(\cfrac{n}{2}) + \Omega">
+<meta property="og:description" content="引用：   古月居 ros1 wiki ros2 wiki ROS2安装说明   ROS2的介绍,与ROS1的区别  ROS (Robot Operating System)机器人操作系统，主要分为两代release: ROS1 (代号 Kinetic/indigo): http://wiki.ros.org ROS2 (代号 Ardent Apolane): http://github.com">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-08-29T16:42:36.407Z">
+<meta property="og:image" content="http://yoursite.com/2019/images/01%20ros2archtecture.png">
+<meta property="og:image" content="http://yoursite.com/2019/images/02%20ros2communication.png">
+<meta property="og:updated_time" content="2019-09-08T08:41:10.482Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="第三章-分治策略">
-<meta name="twitter:description" content="分治策略 三个步骤  分解(Divide)：将问题划分为规模更小的子问题 解决(Conquer)：递归的求解出子问题，如果子问题规模足够小，则停止递归，直接求解 合并(Combine)：将子问题的解组合成原问题的解   求解函数  T(n) =  \begin{cases}     \Omega(n), &amp; if\ n\ =\ 1\ \\     2T(\cfrac{n}{2}) + \Omega">
+<meta name="twitter:title" content="02 ROS2 Ardent Apalone">
+<meta name="twitter:description" content="引用：   古月居 ros1 wiki ros2 wiki ROS2安装说明   ROS2的介绍,与ROS1的区别  ROS (Robot Operating System)机器人操作系统，主要分为两代release: ROS1 (代号 Kinetic/indigo): http://wiki.ros.org ROS2 (代号 Ardent Apolane): http://github.com">
+<meta name="twitter:image" content="http://yoursite.com/2019/images/01%20ros2archtecture.png">
 
 
 
@@ -134,13 +137,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/08/25/分治策略/">
+  <link rel="canonical" href="http://yoursite.com/2019/09/08/02-ROS2-Ardent-Apalone/">
 
 
 
 
 
-  <title>第三章-分治策略 | On the way</title>
+  <title>02 ROS2 Ardent Apalone | On the way</title>
   
 
 
@@ -283,7 +286,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/25/分治策略/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/08/02-ROS2-Ardent-Apalone/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Zhiyuan Han">
@@ -300,7 +303,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">第三章-分治策略</h1>
+          <h1 class="post-title" itemprop="name headline">02 ROS2 Ardent Apalone</h1>
         
 
         <div class="post-meta">
@@ -312,8 +315,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-08-25T06:58:47+08:00">
-                2019-08-25
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-09-08T16:09:51+08:00">
+                2019-09-08
               </time>
             
 
@@ -335,8 +338,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/算法导论/" itemprop="url" rel="index">
-                    <span itemprop="name">算法导论</span>
+                  <a href="/categories/ROS/" itemprop="url" rel="index">
+                    <span itemprop="name">ROS</span>
                   </a>
                 </span>
 
@@ -372,58 +375,49 @@
       
 
       
-        <h2 id="分治策略"><a href="#分治策略" class="headerlink" title="分治策略"></a>分治策略</h2><ul>
-<li><p>三个步骤</p>
-<ol>
-<li>分解(Divide)：将问题划分为规模更小的子问题</li>
-<li>解决(Conquer)：递归的求解出子问题，如果子问题规模足够小，则停止递归，直接求解</li>
-<li>合并(Combine)：将子问题的解组合成原问题的解</li>
-</ol>
-</li>
-<li><p>求解函数</p>
-<script type="math/tex; mode=display">
-T(n) = 
-\begin{cases}
-    \Omega(n), & if\ n\ =\ 1\ \\
-    2T(\cfrac{n}{2}) + \Omega(n), & if\ n\ >\ 1
-\end{cases}</script><ul>
-<li>如何求解该方法的复杂度为 $\theta(nlgn)$,可以参考如下分解过程<ol>
-<li>假设c用于表示求解规模为1所需要的时间以及在分解合并过程中需要需要的时间</li>
-<li>那么 总体就是cn，分解： $T(\cfrac{n}{2})$ $\cfrac{n}{2}$ —-&gt;继续分解$\cfrac{n}{4}$ $\cfrac{n}{4}$ $\cfrac{n}{4}$ $\cfrac{n}{4}$,依次以$\log_2n$的方式分解</li>
-<li>so 复杂度为 $\theta(nlgn)$</li>
-</ol>
-</li>
-</ul>
-</li>
-<li><p>问题示例</p>
+        <blockquote>
+<p>引用： </p>
 <ul>
-<li>[x] 最大子串 (maximum subarray)， 假设整个数组的$A[low, high]$</li>
-<li>[ ] 思考如何使用分治策略得到最大子串的一个最优解</li>
-<li><p>回答： 将问题分解为规模更小的几个步骤：比如选取中间mid序号，将子数组问题分解为两个规模尽量相等的子数组， 那么存在如下三种可能</p>
-<ol>
-<li>最大子数组位于$A[low, mid]$之中,因此 $low \le i \le j \le high$</li>
-<li>最大子数组位于$A[mid + 1, high]$之中，因此 $mid \lt i \le j \le high$</li>
-<li>还有一种情况是跨越了中点mid, 因此 $low \le i \le mid \le j \le high$<ul>
-<li>求解第三步骤：实际就是已mid为分隔，分别向两侧计算最大子串后，然后合并即可，伪代码如下，返回为i, j, max_value<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">FIND_MAX_CORSSING_SUBARRAY(A, low, mid, high):</span><br><span class="line">  left_sum = -int.MAX</span><br><span class="line">  sum = 0</span><br><span class="line">  for i = mid downto low:</span><br><span class="line">    sum = sum + A[i]</span><br><span class="line">    if sum &gt; left_sum:</span><br><span class="line">      left_sum = sum</span><br><span class="line">      max_left = i</span><br><span class="line">  </span><br><span class="line">  right_sum = -int.MAX</span><br><span class="line">  sum = 0</span><br><span class="line">  for j = mid + 1 to high:</span><br><span class="line">    sum = sum + A[j]</span><br><span class="line">    if sum &gt; right_sum:</span><br><span class="line">      right_sum = sum</span><br><span class="line">      max_right = j</span><br><span class="line">  return (max_left, max_right, left_sum + right_sum)</span><br></pre></td></tr></table></figure>
-</li>
+<li><a href="http://www.guyuehome.com/column/ros2%e6%8e%a2%e7%b4%a2%e6%80%bb%e7%bb%93" target="_blank" rel="noopener">古月居</a></li>
+<li><a href="http://wiki.ros.org" target="_blank" rel="noopener">ros1 wiki</a></li>
+<li><a href="http://github.com/ros2/ros2/wiki" target="_blank" rel="noopener">ros2 wiki</a></li>
+<li><a href="https://blog.csdn.net/zhangrelay/article/details/78778590" target="_blank" rel="noopener">ROS2安装说明</a></li>
 </ul>
-</li>
-</ol>
+</blockquote>
+<h2 id="ROS2的介绍-与ROS1的区别"><a href="#ROS2的介绍-与ROS1的区别" class="headerlink" title="ROS2的介绍,与ROS1的区别"></a>ROS2的介绍,与ROS1的区别</h2><hr>
 <ul>
-<li>有了总体的分析，所有程序的伪代码如下<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">FIND_MAXIMUM_SUMARRAY(A, low, high)</span><br><span class="line">  if hight == low:</span><br><span class="line">    return (low, high, A[low])</span><br><span class="line">  else mid = [(low+high)/2]</span><br><span class="line">    (left_low, left_high, left_sum) = FIND_MAXIMUM_SUMARRAY(A, low, mid)</span><br><span class="line">    (right_low, right_high, right_sum) = FIND_MAXIMUM_SUMARRAY(A, mid + 1, high)</span><br><span class="line">    (cross_low, cross_high, cross_sum) = FIND_MAX_CORSSING_SUBARRAY(A, low, mid, high)</span><br><span class="line"></span><br><span class="line">    if left_sum &gt;= right_sum and cross_sum &gt;= cross_sum:</span><br><span class="line">      return (left_low, left_high, left_sum)</span><br><span class="line">    else right_sum &gt;= left_sum and right_sm &gt;= cross_sum:</span><br><span class="line">      return (right_low, right_high, right_sum)</span><br><span class="line">    else return (cross_low, cross_high, cross_sum)</span><br></pre></td></tr></table></figure>
-</li>
+<li>ROS (Robot Operating System)机器人操作系统，主要分为两代release:</li>
+<li><strong>ROS1 (代号 Kinetic/indigo)</strong>: <a href="http://wiki.ros.org" target="_blank" rel="noopener">http://wiki.ros.org</a></li>
+<li><strong>ROS2 (代号 Ardent Apolane)</strong>: <a href="http://github.com/ros2/ros2/wiki" target="_blank" rel="noopener">http://github.com/ros2/ros2/wiki</a></li>
 </ul>
-</li>
-</ul>
-</li>
-</ul>
-<h3 id="知识扩展"><a href="#知识扩展" class="headerlink" title="知识扩展"></a>知识扩展</h3><ul>
-<li>排列组合问题<ol>
-<li>排列的定义：从n个不同的元素中，任取m($m \lt= n$, m n均为自然数)个数按照一定的顺序排列成一列，叫做从n个不同元素中取出m个元素排成一列； 符号 $A_n^m$ 表示。<script type="math/tex; mode=display">A_n^m = n(n-1)(n-2)\cdots(n-m+1) = \cfrac{n!}{(n-m)!}</script></li>
-<li>组合的定义： 从n个不同的元素中，任取m($m \lt= n$, m n均为自然数)个数组成一个组合，组合是无序的，公式：<script type="math/tex; mode=display">C_n^m = \frac{A_n^m}{m!} = \cfrac{n!}{m!(n-m)!}</script></li>
+<h3 id="相比ROS1，ROS2的涉及目标"><a href="#相比ROS1，ROS2的涉及目标" class="headerlink" title="相比ROS1，ROS2的涉及目标"></a>相比ROS1，ROS2的涉及目标</h3><ol>
+<li>支持多机器人系统<br>ROS2增强了对多机器人系统的支持，提高了多机器人之间网络通讯的网络性能，更多多机器人系统及应用将出现在ROS社区中。</li>
+<li>铲除原型与产品之间的鸿沟<br>ROS2不仅针对科研领域，还关注机器人从研究到应用之间的过渡，可以让更多机器人直接搭载ROS2系统走向市场</li>
+<li>支持微控制器<br>ROS2不仅可以运行在现有的X86和ARM系统上，还将支持MCU等嵌入式微控制器，比如常用的ARM-M4、M7内核。</li>
+<li>支持实时控制<br>ROS2还加入了实时控制的支持，可以提高控制的时效性和整体机器人的性能。</li>
+<li>跨系统平台支持<br>ROS2不止能运行在Linux系统之上，还增加了对Windows和MACOS等系统的支持，让开发者的选择更加自由。</li>
 </ol>
+<h3 id="ROS2的架构与ROS1的区别"><a href="#ROS2的架构与ROS1的区别" class="headerlink" title="ROS2的架构与ROS1的区别"></a>ROS2的架构与ROS1的区别</h3><p><img src="../../../images/01&#32;ros2archtecture.png" alt="ROS2架构"></p>
+<ol>
+<li>OS层<br>ROS1主要构建于Linux系统之上，ROS2带来了改变，支持构建的系统包括Linux、Windows、Mac、RTOS，甚至没有操作系统的裸机。</li>
+<li><p>中间件<br>ROS中最重要的一个概念就是基于发布/订阅模型的“节点”，可以让开发者并行开发低耦合的功能模块，并且便于二次复用。ROS1的通讯系统基于TCPROS/UDPROS，而ROS2的通讯系统基于DDS。DDS是一种分布式实时系统中数据发布/订阅的标准解决方案，下一小节会具体讲解。ROS2内部提供了DDS的抽象层实现，用户不需要关注底层DDS的提供厂家。</p>
+<p>在ROS1的架构中Nodelet和TCPROS/UDPROS是并列的层次，为同一个进程中的多个节点提供一种更优化的数据传输方式。ROS2中也保留了这种数据传输方式，只不过换了一个名字，叫做“Intra-process”，同样也是独立于DDS。</p>
 </li>
-</ul>
+<li>应用层<br>ROS1强依赖于ROS Master，可以想像一旦Master宕机，整个系统会面临如何的窘境。但是从右边ROS2的架构中我们可以发现，之前让人耿耿于怀的Master终于消失了，节点之间使用一种称为“Discovery”的发现机制来获取彼此的信息。<br>3.1 ROS2的核心——DDS<br>DDS，Data Distribution Service，即数据分发服务，2004年由对象管理组织OMG（Object Management Group）发布，是一种专门为实时系统设计的数据分发/订阅标准。</li>
+</ol>
+<p><code>DDS最早应用于美国海军， 解决舰船复杂网络环境中大量软件升级的兼容性问题，目前已经成为美国国防部的强制标准，同时广泛应用于国防、民航、工业控制等领域，成为分布式实时系统中数据发布/订阅的标准解决方案。其技术核心是以数据为核心的发布/订阅模型（Data-Centric Publish-Subscribe ，DCPS），这种DCPS模型创建了一个“全局数据空间”（global data space）的概念，所有独立的应用都可以访问
+在DDS中，每一个发布者或者订阅者都称为参与者（participant），类似于ROS中节点的概念。每一个参与者都可以使用某种定义好的数据类型来读写全局数据空间。</code><br>4 <strong>ROS2的通讯模型</strong><br>ROS1 主要是基于topic service等通讯机制，ROS2主要是基于DDS(Data Distribution Service), 所以通讯模型相对会复杂一些：<br><img src="../../../images/02&#32;ros2communication.png" alt><br>ROS2的通讯模型有以下几个关键概念：</p>
+<p>4.1. <strong>参与者（Domain Participant）</strong><br>  一个参与者Participant就是一个容器，对应于一个使用DDS的用户，任何DDS的用户都必须通过Participant来访问全局数据空间。</p>
+<p>4.2. <strong>发布者（Publisher）</strong><br>  数据发布的执行者，支持多种数据类型的发布，可以与多个数据写入器（DataWriter）相联，发布一种或多种主题（Topic）的消息。</p>
+<p>4.3. <strong>订阅者（Subscriber）</strong><br>  数据订阅的执行者，支持多种数据类型的订阅，可以与多个数据读取器（DataReader）相联，订阅一种或多种主题（Topic）的消息。</p>
+<p>4.4. <strong>数据写入器（DataWriter）</strong><br>  应用向发布者更新数据的对象，每个数据写入器对应一个特定的Topic，类似于ROS1中的一个消息发布者。</p>
+<p>4.5. <strong>数据读取器（DataReader）</strong><br>  应用从订阅者读取数据的对象，每个数据读取器对应一个特定的Topic，类似于ROS1中的一个消息订阅者。</p>
+<p>4.6. <strong>主题（Topic）</strong><br>  这个和ROS1中的Topic概念一致，一个Topic包含一个名称和一种数据结构。</p>
+<p>4.7. <strong>Quality of Service</strong><br>  质量服务原则，简称QoS Policy，这是ROS2中新增的、也是非常重要的一个原则，控制各方面与底层的通讯机制，主要从时间限制、可靠性、持续性、历史记录这几个方面，满足用户针对不同场景的数据需求。</p>
+<h2 id="Ubuntu18-04-安装ROS2"><a href="#Ubuntu18-04-安装ROS2" class="headerlink" title="Ubuntu18:04 安装ROS2"></a>Ubuntu18:04 安装ROS2</h2><hr>
+<blockquote>
+<p>引用： <a href="http://www.guyuehome.com/1228" target="_blank" rel="noopener">ROS2探索总结</a></p>
+</blockquote>
 
       
     </div>
@@ -441,9 +435,7 @@ T(n) =
       
         <div class="post-tags">
           
-            <a href="/tags/数据结构/" rel="tag"># 数据结构</a>
-          
-            <a href="/tags/算法/" rel="tag"># 算法</a>
+            <a href="/tags/ROS2/" rel="tag"># ROS2</a>
           
         </div>
       
@@ -456,8 +448,8 @@ T(n) =
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/08/24/First-Page/" rel="next" title="First Page">
-                <i class="fa fa-chevron-left"></i> First Page
+              <a href="/2019/09/06/01-collections-in-python/" rel="next" title="01 collections in python">
+                <i class="fa fa-chevron-left"></i> 01 collections in python
               </a>
             
           </div>
@@ -465,10 +457,6 @@ T(n) =
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/08/27/index/" rel="prev" title="矩阵相乘">
-                矩阵相乘 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -600,7 +588,7 @@ T(n) =
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#分治策略"><span class="nav-number">1.</span> <span class="nav-text">分治策略</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#知识扩展"><span class="nav-number">1.1.</span> <span class="nav-text">知识扩展</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#ROS2的介绍-与ROS1的区别"><span class="nav-number">1.</span> <span class="nav-text">ROS2的介绍,与ROS1的区别</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#相比ROS1，ROS2的涉及目标"><span class="nav-number">1.1.</span> <span class="nav-text">相比ROS1，ROS2的涉及目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ROS2的架构与ROS1的区别"><span class="nav-number">1.2.</span> <span class="nav-text">ROS2的架构与ROS1的区别</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Ubuntu18-04-安装ROS2"><span class="nav-number">2.</span> <span class="nav-text">Ubuntu18:04 安装ROS2</span></a></li></ol></div>
             
 
           </div>
@@ -778,26 +766,6 @@ T(n) =
   
 
   
-  
-    <script type="text/x-mathjax-config">
-      MathJax.Hub.Config({
-        tex2jax: {
-          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
-          processEscapes: true,
-          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-        }
-      });
-    </script>
-
-    <script type="text/x-mathjax-config">
-      MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax(), i;
-        for (i=0; i < all.length; i += 1) {
-          all[i].SourceElement().parentNode.className += ' has-jax';
-        }
-      });
-    </script>
-    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
   
 
 
