@@ -377,51 +377,27 @@
       
         
           
-            <blockquote>
-<p>引用： </p>
-<ul>
-<li><a href="http://www.guyuehome.com/column/ros2%e6%8e%a2%e7%b4%a2%e6%80%bb%e7%bb%93" target="_blank" rel="noopener">古月居</a></li>
-<li><a href="http://wiki.ros.org" target="_blank" rel="noopener">ros1 wiki</a></li>
-<li><a href="http://github.com/ros2/ros2/wiki" target="_blank" rel="noopener">ros2 wiki</a></li>
-<li><a href="https://blog.csdn.net/zhangrelay/article/details/78778590" target="_blank" rel="noopener">ROS2安装说明</a></li>
-</ul>
-</blockquote>
-<h2 id="ROS2的介绍-与ROS1的区别"><a href="#ROS2的介绍-与ROS1的区别" class="headerlink" title="ROS2的介绍,与ROS1的区别"></a>ROS2的介绍,与ROS1的区别</h2><hr>
-<ul>
-<li>ROS (Robot Operating System)机器人操作系统，主要分为两代release:</li>
-<li><strong>ROS1 (代号 Kinetic/indigo)</strong>: <a href="http://wiki.ros.org" target="_blank" rel="noopener">http://wiki.ros.org</a></li>
-<li><strong>ROS2 (代号 Ardent Apolane)</strong>: <a href="http://github.com/ros2/ros2/wiki" target="_blank" rel="noopener">http://github.com/ros2/ros2/wiki</a></li>
-</ul>
-<h3 id="相比ROS1，ROS2的涉及目标"><a href="#相比ROS1，ROS2的涉及目标" class="headerlink" title="相比ROS1，ROS2的涉及目标"></a>相比ROS1，ROS2的涉及目标</h3><ol>
-<li>支持多机器人系统<br>ROS2增强了对多机器人系统的支持，提高了多机器人之间网络通讯的网络性能，更多多机器人系统及应用将出现在ROS社区中。</li>
-<li>铲除原型与产品之间的鸿沟<br>ROS2不仅针对科研领域，还关注机器人从研究到应用之间的过渡，可以让更多机器人直接搭载ROS2系统走向市场</li>
-<li>支持微控制器<br>ROS2不仅可以运行在现有的X86和ARM系统上，还将支持MCU等嵌入式微控制器，比如常用的ARM-M4、M7内核。</li>
-<li>支持实时控制<br>ROS2还加入了实时控制的支持，可以提高控制的时效性和整体机器人的性能。</li>
-<li>跨系统平台支持<br>ROS2不止能运行在Linux系统之上，还增加了对Windows和MACOS等系统的支持，让开发者的选择更加自由。</li>
-</ol>
-<h3 id="ROS2的架构与ROS1的区别"><a href="#ROS2的架构与ROS1的区别" class="headerlink" title="ROS2的架构与ROS1的区别"></a>ROS2的架构与ROS1的区别</h3><p><img src="../../../images/01&#32;ros2archtecture.png" alt="ROS2架构"></p>
-<ol>
-<li>OS层<br>ROS1主要构建于Linux系统之上，ROS2带来了改变，支持构建的系统包括Linux、Windows、Mac、RTOS，甚至没有操作系统的裸机。</li>
-<li><p>中间件<br>ROS中最重要的一个概念就是基于发布/订阅模型的“节点”，可以让开发者并行开发低耦合的功能模块，并且便于二次复用。ROS1的通讯系统基于TCPROS/UDPROS，而ROS2的通讯系统基于DDS。DDS是一种分布式实时系统中数据发布/订阅的标准解决方案，下一小节会具体讲解。ROS2内部提供了DDS的抽象层实现，用户不需要关注底层DDS的提供厂家。</p>
-<p>在ROS1的架构中Nodelet和TCPROS/UDPROS是并列的层次，为同一个进程中的多个节点提供一种更优化的数据传输方式。ROS2中也保留了这种数据传输方式，只不过换了一个名字，叫做“Intra-process”，同样也是独立于DDS。</p>
-</li>
-<li>应用层<br>ROS1强依赖于ROS Master，可以想像一旦Master宕机，整个系统会面临如何的窘境。但是从右边ROS2的架构中我们可以发现，之前让人耿耿于怀的Master终于消失了，节点之间使用一种称为“Discovery”的发现机制来获取彼此的信息。<br>3.1 ROS2的核心——DDS<br>DDS，Data Distribution Service，即数据分发服务，2004年由对象管理组织OMG（Object Management Group）发布，是一种专门为实时系统设计的数据分发/订阅标准。</li>
-</ol>
-<p><code>DDS最早应用于美国海军， 解决舰船复杂网络环境中大量软件升级的兼容性问题，目前已经成为美国国防部的强制标准，同时广泛应用于国防、民航、工业控制等领域，成为分布式实时系统中数据发布/订阅的标准解决方案。其技术核心是以数据为核心的发布/订阅模型（Data-Centric Publish-Subscribe ，DCPS），这种DCPS模型创建了一个“全局数据空间”（global data space）的概念，所有独立的应用都可以访问
-在DDS中，每一个发布者或者订阅者都称为参与者（participant），类似于ROS中节点的概念。每一个参与者都可以使用某种定义好的数据类型来读写全局数据空间。</code><br>4 <strong>ROS2的通讯模型</strong><br>ROS1 主要是基于topic service等通讯机制，ROS2主要是基于DDS(Data Distribution Service), 所以通讯模型相对会复杂一些：<br><img src="../../../images/02&#32;ros2communication.png" alt><br>ROS2的通讯模型有以下几个关键概念：</p>
-<p>4.1. <strong>参与者（Domain Participant）</strong><br>  一个参与者Participant就是一个容器，对应于一个使用DDS的用户，任何DDS的用户都必须通过Participant来访问全局数据空间。</p>
-<p>4.2. <strong>发布者（Publisher）</strong><br>  数据发布的执行者，支持多种数据类型的发布，可以与多个数据写入器（DataWriter）相联，发布一种或多种主题（Topic）的消息。</p>
-<p>4.3. <strong>订阅者（Subscriber）</strong><br>  数据订阅的执行者，支持多种数据类型的订阅，可以与多个数据读取器（DataReader）相联，订阅一种或多种主题（Topic）的消息。</p>
-<p>4.4. <strong>数据写入器（DataWriter）</strong><br>  应用向发布者更新数据的对象，每个数据写入器对应一个特定的Topic，类似于ROS1中的一个消息发布者。</p>
-<p>4.5. <strong>数据读取器（DataReader）</strong><br>  应用从订阅者读取数据的对象，每个数据读取器对应一个特定的Topic，类似于ROS1中的一个消息订阅者。</p>
-<p>4.6. <strong>主题（Topic）</strong><br>  这个和ROS1中的Topic概念一致，一个Topic包含一个名称和一种数据结构。</p>
-<p>4.7. <strong>Quality of Service</strong><br>  质量服务原则，简称QoS Policy，这是ROS2中新增的、也是非常重要的一个原则，控制各方面与底层的通讯机制，主要从时间限制、可靠性、持续性、历史记录这几个方面，满足用户针对不同场景的数据需求。</p>
-<h2 id="Ubuntu18-04-安装ROS2"><a href="#Ubuntu18-04-安装ROS2" class="headerlink" title="Ubuntu18:04 安装ROS2"></a>Ubuntu18:04 安装ROS2</h2><hr>
-<blockquote>
-<p>引用： <a href="http://www.guyuehome.com/1228" target="_blank" rel="noopener">ROS2探索总结</a></p>
-</blockquote>
-
           
+引用： 
+
+古月居
+ros1 wiki
+ros2 wiki
+ROS2安装说明
+
+
+ROS2的介绍,与ROS1的区别
+
+ROS (Robot Operating System)机器人操作系统，主要分为两代release:
+ROS1 (代号 Kinetic/indigo): http://wiki.r
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/09/08/02-ROS2-Ardent-Apalone/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -561,25 +537,16 @@
       
         
           
-            <h2 id="collection-build-in-lib-in-python"><a href="#collection-build-in-lib-in-python" class="headerlink" title="collection build-in lib in python"></a>collection build-in lib in python</h2><hr>
-<p>python官方对collections的定义：<br><strong>collections</strong> — High-performance container datatypes<br>collections模块在内置str,list,dict,set,tuple等的基础上提供了额外的数据类型：</p>
-<ul>
-<li>namedtuple(): 生成可以使用名字来访问元素内容的tuple子类</li>
-<li>deque: 双端队列，可以快速的从一侧追加和退出对象</li>
-<li>Counter: 计数器，主要用于计数</li>
-<li>OrderedDict: 有序字典</li>
-<li>defaultdict: 带有默认值的字典</li>
-</ul>
-<h4 id="namedtuple"><a href="#namedtuple" class="headerlink" title="namedtuple()"></a>namedtuple()</h4><p>主要用来产生可以使用名称来访问元素的数据对象，通常用来增强代码的可读性， 在访问一些tuple类型的数据时尤其好用<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> collections <span class="keyword">import</span> namedtuple</span><br><span class="line"></span><br><span class="line">websites = [</span><br><span class="line">  (<span class="string">"baidu"</span>, <span class="string">"http://www.baidu.com"</span>, <span class="string">"Liyanhong"</span>),</span><br><span class="line">  (<span class="string">"163"</span>, <span class="string">"http://www.163.com"</span>, <span class="string">"Dinglei"</span>),</span><br><span class="line">  (<span class="string">"meituan"</span>, <span class="string">"http://www.meituan.com"</span>, <span class="string">"Wangxing"</span>),</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line">websites_named = namedtuple(<span class="string">"Website"</span>,[<span class="string">"name"</span>, <span class="string">"url"</span>, <span class="string">"founder"</span>])</span><br><span class="line"><span class="keyword">for</span> site <span class="keyword">in</span> websites:</span><br><span class="line">  website = websites_named(site)</span><br><span class="line">  print(website)</span><br></pre></td></tr></table></figure></p>
-<h4 id="deque-双端队列"><a href="#deque-双端队列" class="headerlink" title="deque 双端队列"></a>deque 双端队列</h4><p>deque其实是 double-ended queue 的缩写，翻译过来就是双端队列，它最大的好处就是实现了从队列 头部快速增加和取出对象: .popleft(), .appendleft();<br>你可能会说，原生的list也可以从头部添加和取出对象啊？就像这样：<br>l.insert(0, v)<br>l.pop(0)<br>但是值得注意的是，list对象的这两种用法的时间复杂度是 O(n) ，也就是说随着元素数量的增加耗时呈 线性上升。而使用deque对象则是 O(1) 的复杂度，所以当你的代码有这样的需求的时候， 一定要记得使用deque;<br>作为一个双端队列，deque还提供了一些其他的好用方法，比如 rotate 等<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">这个是一个有趣的例子，主要使用了deque的rotate方法来实现了一个无限循环</span></span><br><span class="line"><span class="string">的加载动画</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="keyword">from</span> collections <span class="keyword">import</span> deque</span><br><span class="line"></span><br><span class="line">fancy_loading = deque(<span class="string">'&gt;--------------------'</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    <span class="keyword">print</span> <span class="string">'\r%s'</span> % <span class="string">''</span>.join(fancy_loading),</span><br><span class="line">    fancy_loading.rotate(<span class="number">1</span>)</span><br><span class="line">    sys.stdout.flush()</span><br><span class="line">    time.sleep(<span class="number">0.08</span>)</span><br></pre></td></tr></table></figure></p>
-<h4 id="Counter"><a href="#Counter" class="headerlink" title="Counter"></a>Counter</h4><p>Counter<br>计数器是一个非常常用的功能需求，collections也贴心的为你提供了这个功能。</p>
-<p>举个栗子<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">下面这个例子就是使用Counter模块统计一段句子里面所有字符出现次数</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="keyword">from</span> collections <span class="keyword">import</span> Counter</span><br><span class="line"></span><br><span class="line">s = <span class="string">'''A Counter is a dict subclass for counting hashable objects. It is an unordered collection where elements are stored as dictionary keys and their counts are stored as dictionary values. Counts are allowed to be any integer value including zero or negative counts. The Counter class is similar to bags or multisets in other languages.'''</span>.lower()</span><br><span class="line"></span><br><span class="line">c = Counter(s)</span><br><span class="line"><span class="comment"># 获取出现频率最高的5个字符</span></span><br><span class="line"><span class="keyword">print</span> c.most_common(<span class="number">5</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Result:</span></span><br><span class="line">[(<span class="string">' '</span>, <span class="number">54</span>), (<span class="string">'e'</span>, <span class="number">32</span>), (<span class="string">'s'</span>, <span class="number">25</span>), (<span class="string">'a'</span>, <span class="number">24</span>), (<span class="string">'t'</span>, <span class="number">24</span>)]</span><br></pre></td></tr></table></figure></p>
-<h4 id="OrderedDict"><a href="#OrderedDict" class="headerlink" title="OrderedDict"></a>OrderedDict</h4><p>在Python中，dict这个数据结构由于hash的特性，是无序的，这在有的时候会给我们带来一些麻烦， 幸运的是，collections模块为我们提供了OrderedDict，当你要获得一个有序的字典对象时，用它就对了。</p>
-<p>举个栗子<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="keyword">from</span> collections <span class="keyword">import</span> OrderedDict</span><br><span class="line"></span><br><span class="line">items = (</span><br><span class="line">    (<span class="string">'A'</span>, <span class="number">1</span>),</span><br><span class="line">    (<span class="string">'B'</span>, <span class="number">2</span>),</span><br><span class="line">    (<span class="string">'C'</span>, <span class="number">3</span>)</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">regular_dict = dict(items)</span><br><span class="line">ordered_dict = OrderedDict(items)</span><br><span class="line"></span><br><span class="line"><span class="keyword">print</span> <span class="string">'Regular Dict:'</span></span><br><span class="line"><span class="keyword">for</span> k, v <span class="keyword">in</span> regular_dict.items():</span><br><span class="line">    <span class="keyword">print</span> k, v</span><br><span class="line"></span><br><span class="line"><span class="keyword">print</span> <span class="string">'Ordered Dict:'</span></span><br><span class="line"><span class="keyword">for</span> k, v <span class="keyword">in</span> ordered_dict.items():</span><br><span class="line">    <span class="keyword">print</span> k, v</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># Result:</span></span><br><span class="line">Regular Dict:</span><br><span class="line">A <span class="number">1</span></span><br><span class="line">C <span class="number">3</span></span><br><span class="line">B <span class="number">2</span></span><br><span class="line">Ordered Dict:</span><br><span class="line">A <span class="number">1</span></span><br><span class="line">B <span class="number">2</span></span><br><span class="line">C <span class="number">3</span></span><br></pre></td></tr></table></figure></p>
-<h4 id="defaultdict"><a href="#defaultdict" class="headerlink" title="defaultdict"></a>defaultdict</h4><p>我们都知道，在使用Python原生的数据结构dict的时候，如果用 d[key] 这样的方式访问， 当指定的key不存在时，是会抛出KeyError异常的。</p>
-<p>但是，如果使用defaultdict，只要你传入一个默认的工厂方法，那么请求一个不存在的key时， 便会调用这个工厂方法使用其结果来作为这个key的默认值。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="keyword">from</span> collections <span class="keyword">import</span> defaultdict</span><br><span class="line"></span><br><span class="line">members = [</span><br><span class="line">    <span class="comment"># Age, name</span></span><br><span class="line">    [<span class="string">'male'</span>, <span class="string">'John'</span>],</span><br><span class="line">    [<span class="string">'male'</span>, <span class="string">'Jack'</span>],</span><br><span class="line">    [<span class="string">'female'</span>, <span class="string">'Lily'</span>],</span><br><span class="line">    [<span class="string">'male'</span>, <span class="string">'Pony'</span>],</span><br><span class="line">    [<span class="string">'female'</span>, <span class="string">'Lucy'</span>],</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line">result = defaultdict(list)</span><br><span class="line"><span class="keyword">for</span> sex, name <span class="keyword">in</span> members:</span><br><span class="line">    result[sex].append(name)</span><br><span class="line"></span><br><span class="line"><span class="keyword">print</span> result</span><br><span class="line"></span><br><span class="line"><span class="comment"># Result:</span></span><br><span class="line">defaultdict(&lt;type <span class="string">'list'</span>&gt;, &#123;<span class="string">'male'</span>: [<span class="string">'John'</span>, <span class="string">'Jack'</span>, <span class="string">'Pony'</span>], <span class="string">'female'</span>: [<span class="string">'Lily'</span>, <span class="string">'Lucy'</span>]&#125;)</span><br></pre></td></tr></table></figure>
-          
+          collection build-in lib in python
+python官方对collections的定义：collections — High-performance container datatypescollections模块在内置str,list,dict,set,tuple等的基
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/09/06/01-collections-in-python/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -719,12 +686,19 @@
       
         
           
-            <h2 id="剑指offer-pdf-reading"><a href="#剑指offer-pdf-reading" class="headerlink" title="剑指offer pdf reading"></a>剑指offer pdf reading</h2><hr>
-<h3 id="数据结构"><a href="#数据结构" class="headerlink" title="数据结构"></a>数据结构</h3><ul>
-<li>大多数面试题大多围绕着： 数组、字符串、链表、二叉树、栈、队列这几种基础的数据结构展开；</li>
-</ul>
+          剑指offer pdf reading
+数据结构
+大多数面试题大多围绕着： 数组、字符串、链表、二叉树、栈、队列这几种基础的数据结构展开；
+
 
           
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/09/05/point-to-offer2/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -864,9 +838,16 @@
       
         
           
-            <p>看到一个很好的git总结blog，值得学习和后续相关命令查看<br><a href="https://geeeeeeeeek.github.io/git-recipes/" target="_blank" rel="noopener"><strong>git菜单</strong></a></p>
+          看到一个很好的git总结blog，值得学习和后续相关命令查看git菜单
 
           
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/09/05/git/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1006,71 +987,21 @@
       
         
           
-            <h2 id="二叉树"><a href="#二叉树" class="headerlink" title="二叉树"></a>二叉树</h2><hr>
-<h3 id="1-树的概述"><a href="#1-树的概述" class="headerlink" title="1 树的概述"></a>1 树的概述</h3><p><strong>定义</strong>：树是一个或者多个节点的有效结合，其集中：</p>
-<ul>
-<li>存在一个称为根的特定节点</li>
-<li>用递归的方式看，其余的节点被分成n个互不相交的集合T,其中每个集合都是一棵树，称为子树。(二叉树即是包含两个左右子树，左右子树均为一棵二叉树)</li>
-<li>树种有几个特定度量方式：<ul>
-<li><strong>节点的度</strong>：表示节点有多少个子节点也成为了节点的子树数目，二叉树的节点的度都是$degree \le 2$</li>
-<li><strong>树的度</strong>：所有节点当中，度最高的一个（比如二叉树节点的最大度为2）</li>
-<li><strong>叶子节点</strong>：即度为0的节点</li>
-<li><strong>层(level)</strong>:根节点的层次为1，根节点的孩子依次类推</li>
-<li><strong>树的高度或者深度</strong>：表示树中的最大节点层</li>
-</ul>
-</li>
-</ul>
-<h3 id="2-二叉树"><a href="#2-二叉树" class="headerlink" title="2 二叉树"></a>2 二叉树</h3><p>1.<strong>定义</strong>：二叉树(binary)是有限多个节点的集合，这个集合可以是空集，或者是有一个根节点和两个互不相交的左子树和右子树组成</p>
-<ol>
-<li><p>python数据结构定义</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Node</span>:</span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, data)</span>:</span></span><br><span class="line">    self.value = data</span><br><span class="line">    self.left_tree = <span class="literal">None</span></span><br><span class="line">    self.right_tree = <span class="literal">None</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>四种遍历方式<br><strong>二叉树</strong></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">        <span class="number">10</span></span><br><span class="line">    /       \</span><br><span class="line">   <span class="number">6</span>         <span class="number">14</span></span><br><span class="line"> /   \     /    \</span><br><span class="line"><span class="number">4</span>     <span class="number">8</span>    <span class="number">12</span>    <span class="number">16</span></span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<p><strong>按照父节点的和左右子节点的排列顺序分为</strong>：</p>
-<ul>
-<li>中序遍历: 先访问左子节点，再访问根节点，最后访问右子节点，上图中中序遍历结果： 4 6 8 10 12 14 16</li>
-<li>前序遍历: 先访问根节点，再访问左子节点，最后访问右子节点，上图中前序遍历结果： 10 6 4 8 14 12 16 </li>
-<li>后续遍历: 先访问左子节点，再访问右子节点，最后访问根节点，上图中后序遍历结果： 4 8 6 12 16 14 10</li>
-<li>层次遍历（宽度优先遍历）： 先访问第一层节点，再访问树的第二层节点。。。。一直访问最后一层节点： 10 6 14 4 8 12 16</li>
-</ul>
-<p><strong>递归的方法实现</strong>（需要耗费较大的空间资源）,优化的方法使用堆栈作为数据存储结构进行处理，空间复杂度会大大降低</p>
-<h3 id="面试中经常遇到关于二叉树的题目"><a href="#面试中经常遇到关于二叉树的题目" class="headerlink" title="面试中经常遇到关于二叉树的题目"></a><strong>面试中经常遇到关于二叉树的题目</strong></h3><ul>
-<li><strong>二叉树的深度</strong></li>
-<li><strong>数的子结构</strong></li>
-<li><strong>二叉树中和为某一个值的路径</strong></li>
-<li><strong>重建二叉树</strong></li>
-<li><strong>二叉树的后序遍历</strong></li>
-<li><strong>从上到下遍历二叉树</strong></li>
-<li><strong>二叉树搜索树： 树种两个节点的最低公共祖先</strong></li>
-<li><strong>二叉树搜索树与双向链表</strong></li>
-<li><strong>堆： 大顶堆，小顶堆</strong></li>
-<li><strong>红黑树</strong><ul>
-<li>红黑树把树种的节点定义为红黑两种颜色，并通过规则确保从根节点到叶节点的最长路径的长度不超过最短路径的两倍</li>
-<li>C++的STL中， set，multiset, map, multimap等数据结构都是基于红黑树红丝线</li>
-</ul>
-</li>
-<li>关于堆和红黑树的面试题： <strong>求最小K个数字</strong></li>
-</ul>
-<h3 id="各种面试题的代码实现"><a href="#各种面试题的代码实现" class="headerlink" title="各种面试题的代码实现"></a>各种面试题的代码实现</h3><h4 id="递归方法实现二叉树的四种遍历方式"><a href="#递归方法实现二叉树的四种遍历方式" class="headerlink" title="递归方法实现二叉树的四种遍历方式"></a>递归方法实现二叉树的四种遍历方式</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> typing <span class="keyword">import</span> List</span><br><span class="line"><span class="keyword">from</span> queue <span class="keyword">import</span> Queue</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BinaryTree</span>:</span></span><br><span class="line">  <span class="string">'''</span></span><br><span class="line"><span class="string">  当前class中的方法使用递归的方法</span></span><br><span class="line"><span class="string">  将二叉树上的节点按照遍历的算法输出的数组中</span></span><br><span class="line"><span class="string">  '''</span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">    self.result_list = <span class="literal">None</span></span><br><span class="line">  </span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">init_result</span><span class="params">(self)</span>:</span></span><br><span class="line">    self.result_list = []</span><br><span class="line">  </span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">print_result_list</span><span class="params">(self, message: str = None)</span> -&gt; <span class="keyword">None</span>:</span></span><br><span class="line">    print(message)</span><br><span class="line">    print(self.result_list)</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">in_order</span><span class="params">(self, node: Node)</span> -&gt; List:</span></span><br><span class="line">    <span class="string">'''</span></span><br><span class="line"><span class="string">    中序遍历, 需要保存到数组里，使用前请调用self.init_result() function</span></span><br><span class="line"><span class="string">    '''</span></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> node:  <span class="comment"># 节点为Null，直接return</span></span><br><span class="line">      <span class="keyword">return</span></span><br><span class="line">    self.in_order(node.left_tree)</span><br><span class="line">    self.result_list.append(node.value)</span><br><span class="line">    self.in_order(node.right_tree)</span><br><span class="line">    <span class="keyword">return</span> self.result_list</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">pre_order</span><span class="params">(self, node: Node)</span> -&gt; List:</span></span><br><span class="line">    <span class="string">'''</span></span><br><span class="line"><span class="string">    前序遍历， 需要保存到数组里，使用前请调用self.init_result() function</span></span><br><span class="line"><span class="string">    :param node: 要前序遍历的node</span></span><br><span class="line"><span class="string">    :return:  </span></span><br><span class="line"><span class="string">    '''</span></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> node:</span><br><span class="line">      <span class="keyword">return</span></span><br><span class="line">    self.result_list.append(node.value)</span><br><span class="line">    self.pre_order(node.left_tree)</span><br><span class="line">    self.pre_order(node.right_tree)</span><br><span class="line">    <span class="keyword">return</span> self.result_list</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">post_order</span><span class="params">(self, node: Node)</span> -&gt; List:</span></span><br><span class="line">    <span class="string">'''</span></span><br><span class="line"><span class="string">    后续遍历， 需要保存到数组里，使用前请调用self.init_result() function</span></span><br><span class="line"><span class="string">    '''</span></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> node:</span><br><span class="line">      <span class="keyword">return</span></span><br><span class="line">    self.post_order(node.left_tree)</span><br><span class="line">    self.post_order(node.right_tree)</span><br><span class="line">    self.result_list.append(node.value)</span><br><span class="line">    <span class="keyword">return</span> self.result_list</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">level_order</span><span class="params">(self, node: Node)</span> -&gt; List[int]:</span></span><br><span class="line">    <span class="string">'''</span></span><br><span class="line"><span class="string">    层次遍历，需要保存到数组里，该方法内部已经调用self.init_result()， 无需外部调用</span></span><br><span class="line"><span class="string">    使用队列的数据结构，将节点放到队列中，先进先出</span></span><br><span class="line"><span class="string">    '''</span></span><br><span class="line">    self.init_result()</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> node:</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">None</span></span><br><span class="line">    q = Queue()  <span class="comment"># 使用队列对树进行层次遍历</span></span><br><span class="line">    q.put(node)  <span class="comment"># first add root node</span></span><br><span class="line">    <span class="keyword">while</span> q.qsize() != <span class="number">0</span>:</span><br><span class="line">        get_node = q.get()  <span class="comment"># type: Node</span></span><br><span class="line">        self.result_list.append(get_node.value)</span><br><span class="line">        <span class="keyword">if</span> get_node.left_tree:</span><br><span class="line">            q.put(get_node.left_tree)</span><br><span class="line">        <span class="keyword">if</span> get_node.right_tree:</span><br><span class="line">            q.put(get_node.right_tree)</span><br><span class="line">    <span class="keyword">return</span> self.result_list</span><br><span class="line">    </span><br><span class="line">  </span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">    node_leaf_4 = Node(<span class="number">4</span>)</span><br><span class="line">    node_leaf_8 = Node(<span class="number">8</span>)</span><br><span class="line">    node_leaf_12 = Node(<span class="number">12</span>)</span><br><span class="line">    node_leaf_16 = Node(<span class="number">16</span>)</span><br><span class="line"></span><br><span class="line">    node_6 = Node(<span class="number">6</span>)</span><br><span class="line">    node_6.left_tree = node_leaf_4</span><br><span class="line">    node_6.right_tree = node_leaf_8</span><br><span class="line"></span><br><span class="line">    node_14 = Node(<span class="number">14</span>)</span><br><span class="line">    node_14.left_tree = node_leaf_12</span><br><span class="line">    node_14.right_tree = node_leaf_16</span><br><span class="line"></span><br><span class="line">    node_root = Node(<span class="number">10</span>)</span><br><span class="line">    node_root.left_tree = node_6</span><br><span class="line">    node_root.right_tree = node_14</span><br><span class="line"></span><br><span class="line">    bt = BinaryTree()</span><br><span class="line">    bt.init_result()</span><br><span class="line">    pre_order_list = bt.pre_order(node_root)</span><br><span class="line">    print(pre_order_list)</span><br><span class="line">    bt.init_result()</span><br><span class="line">    in_order_list = bt.in_order(node_root)</span><br><span class="line">    print(in_order_list)</span><br><span class="line">    bt.init_result()</span><br><span class="line">    post_order_list = bt.post_order(node_root)</span><br><span class="line">    print(post_order_list)</span><br><span class="line">    level_order_list = bt.level_order(node_root)</span><br><span class="line">    print(level_order_list)</span><br><span class="line"></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">pre_order_list:   [10, 6, 4, 8, 14, 12, 16]</span></span><br><span class="line"><span class="string">in_order_list:    [4, 6, 8, 10, 12, 14, 16]</span></span><br><span class="line"><span class="string">post_order_list:  [4, 8, 6, 12, 16, 14, 10]</span></span><br><span class="line"><span class="string">level_order_list: [10, 6, 14, 4, 8, 12, 16]</span></span><br><span class="line"><span class="string">'''</span></span><br></pre></td></tr></table></figure>
-<h4 id="循环方法实现二叉树的四种遍历方式（使用堆栈数据结构）"><a href="#循环方法实现二叉树的四种遍历方式（使用堆栈数据结构）" class="headerlink" title="循环方法实现二叉树的四种遍历方式（使用堆栈数据结构）"></a>循环方法实现二叉树的四种遍历方式（使用堆栈数据结构）</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BinaryTreeOptimization</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    基于堆栈的方法对二叉树进行遍历，算法进一步会优化</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line"><span class="meta">    @staticmethod</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">in_order</span><span class="params">(node: Node)</span> -&gt; List[int]:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        借助队列和队列，对二叉树进行中序遍历</span></span><br><span class="line"><span class="string">        :param node:</span></span><br><span class="line"><span class="string">        :return:</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="keyword">if</span> node <span class="keyword">is</span> <span class="literal">None</span>:  <span class="comment"># None，直接return</span></span><br><span class="line">            <span class="keyword">return</span> []</span><br><span class="line"></span><br><span class="line">        result = []</span><br><span class="line">        stack = []</span><br><span class="line">        pos = node</span><br><span class="line">        <span class="keyword">while</span> pos <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span> <span class="keyword">or</span> len(stack) &gt; <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">if</span> pos <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">                stack.append(pos)</span><br><span class="line">                pos = pos.left_tree</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                pos = stack.pop()</span><br><span class="line">                result.append(pos.value)</span><br><span class="line">                pos = pos.right_tree</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> result</span><br><span class="line"></span><br><span class="line"><span class="meta">    @staticmethod</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">pre_order</span><span class="params">(node: Node)</span> -&gt; List[int]:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        借助队列和队列，对二叉树进行中序遍历,前序遍历</span></span><br><span class="line"><span class="string">        :param node:</span></span><br><span class="line"><span class="string">        :return:</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> node:  <span class="comment"># 节点为None，直接return</span></span><br><span class="line">            <span class="keyword">return</span> []</span><br><span class="line"></span><br><span class="line">        result = []</span><br><span class="line">        s = Stack()</span><br><span class="line">        s.push(node)</span><br><span class="line">        <span class="keyword">while</span> s.is_empty() <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">True</span>:</span><br><span class="line">            get_node = s.pop()  <span class="comment"># type: Node</span></span><br><span class="line">            result.append(get_node.value)</span><br><span class="line">            <span class="keyword">if</span> get_node.right_tree:  <span class="comment"># 先将右子树压栈</span></span><br><span class="line">                s.push(get_node.right_tree)</span><br><span class="line">            <span class="keyword">if</span> get_node.left_tree:</span><br><span class="line">                s.push(get_node.left_tree)</span><br><span class="line">        <span class="keyword">return</span> result</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">post_order</span><span class="params">(self, node: Node)</span> -&gt; List[int]:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        # 后序打印二叉树（非递归）</span></span><br><span class="line"><span class="string">        # 使用两个栈结构</span></span><br><span class="line"><span class="string">        # 第一个栈进栈顺序：左节点-&gt;右节点-&gt;跟节点</span></span><br><span class="line"><span class="string">        # 第一个栈弹出顺序： 跟节点-&gt;右节点-&gt;左节点(先序遍历栈弹出顺序：跟-&gt;左-&gt;右)</span></span><br><span class="line"><span class="string">        # 第二个栈存储为第一个栈的每个弹出依次进栈</span></span><br><span class="line"><span class="string">        # 最后第二个栈依次出栈</span></span><br><span class="line"><span class="string">        :param node:</span></span><br><span class="line"><span class="string">        :return:</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> node:</span><br><span class="line">            <span class="keyword">return</span> []</span><br><span class="line">        result = []</span><br><span class="line">        stack = [node]</span><br><span class="line">        stack2 = []</span><br><span class="line">        <span class="keyword">while</span> len(stack) &gt; <span class="number">0</span>:</span><br><span class="line">            node = stack.pop()</span><br><span class="line">            stack2.append(node)</span><br><span class="line">            <span class="keyword">if</span> node.left_tree <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">                stack.append(node.left_tree)</span><br><span class="line">            <span class="keyword">if</span> node.right_tree <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">                stack.append(node.right_tree)</span><br><span class="line">        <span class="keyword">while</span> len(stack2) &gt; <span class="number">0</span>:</span><br><span class="line">            result.append(stack2.pop().value)</span><br><span class="line">        <span class="keyword">return</span> result</span><br></pre></td></tr></table></figure>
-<h4 id="重建二叉树"><a href="#重建二叉树" class="headerlink" title="重建二叉树"></a>重建二叉树</h4><ul>
-<li>题目： 输入某二叉树的前序遍历和中序遍历的结果，请重建该二叉树；假设输入的前序遍历和中序遍历的结果中都不包含重复的数字。例如：输入前序序列为 {1, 2, 4, 7, 3, 5, 6,8}和中序遍历 {4, 7 ,2, 1, 5 ,3, 8 ,6}，请重建该二叉树</li>
-<li>题解：<ul>
-<li>在二叉树的前序遍历中，第一个数字为根节点。但是在中序遍历中，根节点在序列的中间，左子树的节点位于根节点的左侧，而右子树的节点位于根节点的右边。因此我们需要扫描中序遍历才能找到根节点的值。<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">           1</span></span><br><span class="line"><span class="string">        /     \</span></span><br><span class="line"><span class="string">      2        3</span></span><br><span class="line"><span class="string">    /        /    \</span></span><br><span class="line"><span class="string">  4         5      6</span></span><br><span class="line"><span class="string">    \             /  </span></span><br><span class="line"><span class="string">    7             8</span></span><br><span class="line"><span class="string">'''</span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-</ul>
-<p>寻找根节点和左右子树<br><img src="../../../images/03build_binary_tree.png" alt></p>
-<ul>
-<li><strong>实现代码</strong><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
+          二叉树
+1 树的概述定义：树是一个或者多个节点的有效结合，其集中：
 
-          
+存在一个称为根的特定节点
+用递归的方式看，其余的节点被分成n个互不相交的集合T,其中每个集合都是一棵树，称为子树。(二叉树即是包含两个左右子树，左右子树均为一棵二叉树)
+树种有几个特定度量方式：
+节点的度：表示节点有多少个子节点也
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/09/05/binaryTree/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1210,39 +1141,20 @@
       
         
           
-            <h2 id="剑指offer题目"><a href="#剑指offer题目" class="headerlink" title="剑指offer题目"></a>剑指offer题目</h2><hr>
-<p>抽空刷刷题，保持思路敏捷~~~~</p>
-<ol>
-<li><p>使用两个栈实现一个队列，完成队列中pop和push操作；队列中的元素为int类型</p>
-<ul>
-<li>解题思路： 有限将元素push到stack1中，第一个元素在栈的最底部，比如push {a, b, c}那么在栈中的顺序是 {c, b, a}，符合栈的特点：先进后出；当需要pop一个元素的时候，a在栈的底部，无法满足队列先进先出的特点，这个时候借助stack2,当stack2为空的时候，将stack1中的元素一次pop，然后一次push到stack2，那么stack2中的顺序为 {a, b, c},刚好满足先进先出的原则，代码如下：<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">solution</span>:</span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">    self.stack1 = []</span><br><span class="line">    self.stack2 = []</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">push</span><span class="params">(self, node)</span>:</span></span><br><span class="line">    self.stack1.append(node)</span><br><span class="line">  </span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">pop</span><span class="params">(self)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> len(self.stack2) == <span class="number">0</span>:</span><br><span class="line">      <span class="comment"># 只有stack2为空的时候，才将stack1中的value依次pop出来，在push到stack2</span></span><br><span class="line">      <span class="keyword">while</span> self.stack1:</span><br><span class="line">        self.stack2.append(self.stack1.pop())  <span class="comment"># list.pop() 默认移除列表中最后一个元素，并返回该元素</span></span><br><span class="line">    <span class="keyword">return</span> self.stack2.pop()</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-<li><p>大家都知道斐波那契数列，现在要求输入一个整数n，请你输出斐波那契数列的第n项（从0开始，第0项为0）,n&lt;=39<br><strong>时间限制1s</strong>，所以不用递归</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">Fibinacci</span><span class="params">(self, n)</span>:</span></span><br><span class="line">    fibi_list = [<span class="number">0</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">2</span>]  <span class="comment"># 0: 1, 1 : 1, 2: 1 对应Fib的值</span></span><br><span class="line">    index = <span class="number">4</span></span><br><span class="line">    <span class="keyword">if</span> n <span class="keyword">in</span> [<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>]:</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span></span><br><span class="line">    <span class="keyword">while</span> index &lt;= n:</span><br><span class="line">        fibi_list.append(fibi_list[<span class="number">-1</span>] + fibi_list[<span class="number">-2</span>])</span><br><span class="line">        index = index + <span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> fibi_list[n]</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>一只青蛙一次可以跳上1级台阶，也可以跳上2级。求该青蛙跳上一个n级的台阶总共有多少种跳法（先后次序不同算不同的结果）。</p>
-<ul>
-<li>解题思路：本质上还是Fibonacci<ul>
-<li>当成DP问题来看，最终解是由前面的解累计起来的，如何缩小规模？</li>
-<li>首先，1个台阶只有1中可能， 2个台阶由2中可能（一次2个台阶和2次1个台阶）</li>
-<li>如果n = 3, 最后跳1步到第三个台阶，则剩余还有2个台阶，可以有2中选择； 最后跳2步到第三个台阶，那么剩余还有1个台阶，只有1中选择</li>
-<li><strong>因此，通过分类讨论，问题规模就减少了</strong></li>
-<li>若楼梯台阶 = n; <ul>
-<li>最后跳1步到第n个台阶，则剩余n - 2 步没跳，起始跳到n - 2步设它为pre2种</li>
-<li>最后跳1步到第n个台阶，则剩余n - 1步没有跳，起始调到n - 1步设它为pre1种</li>
-<li>即： dp(i) = dp(i-2) + dp(i-1)<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">jumpFloor</span><span class="params">(self, number)</span>:</span></span><br><span class="line">      jump = [<span class="number">1</span>, <span class="number">2</span>]</span><br><span class="line">      <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">2</span>, number):</span><br><span class="line">          jump.append(jump[i - <span class="number">1</span>] + jump[i <span class="number">-2</span>])</span><br><span class="line">          i += <span class="number">1</span></span><br><span class="line">      <span class="keyword">return</span> jump[number - <span class="number">1</span>]</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ol>
+          剑指offer题目
+抽空刷刷题，保持思路敏捷~~~~
 
-          
+使用两个栈实现一个队列，完成队列中pop和push操作；队列中的元素为int类型
+
+解题思路： 有限将元素push到stack1中，第一个元素在栈的最底部，比如push {a, b, c}那么在栈中的顺序是 {c, b, a}，符合栈的特点：先
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/09/04/point-to-offer/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1382,9 +1294,25 @@
       
         
           
-            <h2 id="PyTorch-介绍"><a href="#PyTorch-介绍" class="headerlink" title="PyTorch 介绍"></a>PyTorch 介绍</h2><hr>
-
           
+引用：
+
+PyTorch简介
+
+
+PyTorch 介绍
+术语- Torch: 火炬
+
+中文描述：Torch是一个与Numpy类似的张量（Tensor）操作库，与Numpy不同的是Torch对GPU支持的很好，Lua是Torch的上层包装；
+英文描述：A tensor library like nu
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/09/03/pytorch01-入门学习01/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1524,23 +1452,22 @@
       
         
           
-            <h2 id="enumerate用法"><a href="#enumerate用法" class="headerlink" title="enumerate用法"></a>enumerate用法</h2><ul>
-<li>python enumerate()内置函数：<ul>
-<li>对于一个可迭代的(iterable)/可遍历的对象(list，字符串)等，enumerate将其组成一个索引序列，利用它可以同时拿到index和value</li>
-<li>多用于for循环中得到的计数</li>
-<li>返回的是一个可enumerate对象</li>
-</ul>
-</li>
-<li>语法<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">enumerate(sequence,[start=<span class="number">0</span>])</span><br><span class="line"><span class="comment"># sequence 是一个序列、迭代器和其他支持迭代的对象</span></span><br><span class="line"><span class="comment"># start 下标起始位置</span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<hr>
-<ul>
-<li>示例<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">    给定一个整数数组 nums 和一个目标值 target，请你在该数组中找出和为目标值的那 两个 整数，并返回他们的数组下标。</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    你可以假设每种输入只会对应一个答案。但是，你不能重复利用这个数组中同样的元素。</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    示例:</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    给定 nums = [2, 7, 11, 15], target = 9</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    因为 nums[0] + nums[1] = 2 + 7 = 9</span></span><br><span class="line"><span class="string">    所以返回 [0, 1]</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    来源：力扣（LeetCode）</span></span><br><span class="line"><span class="string">    链接：https://leetcode-cn.com/problems/two-sum</span></span><br><span class="line"><span class="string">    著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line"><span class="keyword">from</span> typing <span class="keyword">import</span> List</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">two_sum</span><span class="params">(self, nums: List[int], target: int)</span> -&gt; List[int]:</span></span><br><span class="line">    value_index_map = &#123;&#125;</span><br><span class="line">    <span class="keyword">for</span> index, value <span class="keyword">in</span> enumerate(nums):  <span class="comment"># 将数组够着成index, value的形式</span></span><br><span class="line">      other_num = target - value</span><br><span class="line">      <span class="keyword">if</span> other_num <span class="keyword">in</span> value_index_map:</span><br><span class="line">        <span class="keyword">return</span> [value_index_map[other_num], index]  <span class="comment"># 巧妙的实现了： 你可以假设每种输入只会对应一个答案。但是，你不能重复利用这个数组中同样的元素。</span></span><br><span class="line">      </span><br><span class="line">        value_index_map[value] = index</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">None</span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
+          enumerate用法
+python enumerate()内置函数：
+对于一个可迭代的(iterable)/可遍历的对象(list，字符串)等，enumerate将其组成一个索引序列，利用它可以同时拿到index和value
+多用于for循环中得到的计数
+返回的是一个可enumerate对象
 
-          
+
+
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/09/01/enumerate-in-python/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1680,38 +1607,17 @@
       
         
           
-            <h2 id="Python元编程-amp-装饰器"><a href="#Python元编程-amp-装饰器" class="headerlink" title="Python元编程 &amp; 装饰器"></a>Python元编程 &amp; 装饰器</h2><h3 id="装饰器"><a href="#装饰器" class="headerlink" title="装饰器"></a>装饰器</h3><ul>
-<li><p>比如，统计一个函数的执行时间</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">from</span> funtools <span class="keyword">import</span> wraps</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">timestatistic</span><span class="params">(func)</span>:</span></span><br><span class="line">  <span class="string">"""</span></span><br><span class="line"><span class="string">  Decorator the func's excute times</span></span><br><span class="line"><span class="string">  """</span></span><br><span class="line"><span class="meta">  @wraps(func)   # @wraps的目的就是不改变被装饰函数的元信息（比如签名和返回值等）</span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">wrapper</span><span class="params">(*args, **kwargv)</span>:</span></span><br><span class="line">    now = time.now()</span><br><span class="line">    result = func(*args, **kwargv)</span><br><span class="line">    print(func.__name__,time.now() - now())</span><br><span class="line">    <span class="keyword">return</span> result</span><br><span class="line">  <span class="keyword">return</span> wrapper</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@timestatistic</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">count_down</span><span class="params">(n)</span>:</span></span><br><span class="line">  <span class="keyword">while</span> n &gt; <span class="number">0</span>:</span><br><span class="line">    n = n - <span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">一个装饰器就是一个函数，函数的参数是被装饰的函数，然后返回一个新的函数，上面的例子是对count_down() 函数使用装饰器，等同于如下调用</span></span><br><span class="line"><span class="string">count_down_new = timestatistic(count_down)</span></span><br><span class="line"><span class="string">"""</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>python 内置的一些装饰器比如： @property @staticmethod @classmethod;原理是一样的：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span>:</span></span><br><span class="line"><span class="meta">  @staticmethod</span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">method</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">等同于</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span>:</span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">method</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line">  method = staticmethod(method)</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p><strong>其中@wraps装饰器目的是保留被装饰函数的元信息</strong></p>
-<ul>
-<li>解除一个装饰器，装饰器通过@wraps修饰后，可以通过调用其魔法函数<strong>wrapped</strong>属性来方法原始方法<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@timestatistic</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">add</span><span class="params">(x, y)</span>:</span></span><br><span class="line">  <span class="keyword">return</span> x + y</span><br><span class="line">origin_add = add._wrapped__</span><br><span class="line">origin_add(<span class="number">3</span>, <span class="number">5</span>)  <span class="comment"># return 8</span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h3 id="带参数的装饰器"><a href="#带参数的装饰器" class="headerlink" title="带参数的装饰器"></a><strong>带参数的装饰器</strong></h3><ul>
-<li><p>比如添加一个可以指定日志级别和日志内容的装饰器</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> logging</span><br><span class="line"><span class="keyword">from</span> functools <span class="keyword">import</span> wraps</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">logged</span><span class="params">(level, name=None, message=None)</span>:</span></span><br><span class="line">  <span class="string">'''</span></span><br><span class="line"><span class="string">    add a logged function, level is logging level, name is the logger name, and message is the log  message</span></span><br><span class="line"><span class="string">  '''</span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">decorate</span><span class="params">(func)</span>:</span></span><br><span class="line">    logname = name <span class="keyword">if</span> name <span class="keyword">else</span> func.__module__</span><br><span class="line">    log = logging.getLogger(logname)</span><br><span class="line">    logmsg = message <span class="keyword">if</span> message <span class="keyword">else</span> func.__name__</span><br><span class="line"><span class="meta">    @wraps(func)</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">wrapper</span><span class="params">(**args, **kwargv)</span>:</span></span><br><span class="line">      log.log(level, logmsg)</span><br><span class="line">      <span class="keyword">return</span> func(*args, **kwargv)</span><br><span class="line">    <span class="keyword">return</span> wrapper</span><br><span class="line">  <span class="keyword">return</span> decorate</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@logged(logging.DEBUG)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">add</span><span class="params">(x, y)</span>:</span></span><br><span class="line">  <span class="keyword">return</span> x + y</span><br><span class="line"></span><br><span class="line"><span class="meta">@logged(logging.CRITICAL, 'example)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">spam</span><span class="params">()</span>:</span></span><br><span class="line">  print(<span class="string">'spam'</span>)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>初看起来，这种实现看上去很复杂，但是核心思想很简单。 最外层的函数 logged() 接受参数并将它们<strong><em>作用在内部的装饰器函数</em></strong>上面。 内层的函数 decorate() 接受一个函数作为参数，然后在函数上面放置一个包装器。 这里的关键点是包装器是可以使用传递给 logged() 的参数的， 上面调用过程相当于如下代码:</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">add = logged(logging.DEBUG)(add) = decorate(add) /*中间实例化log处理*/ = wrapper(*args, **kwargv) /*内部进行AOP处理（即log的打印）*/</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h3 id="可自定义属性的装饰器"><a href="#可自定义属性的装饰器" class="headerlink" title="可自定义属性的装饰器"></a>可自定义属性的装饰器</h3><ul>
-<li>你想编写一个装饰器，并且允许用户提供参数在运行时控制装饰器行为</li>
-<li>通过引入一个访问函数，使用nonlocal来修改内部变量<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> functools <span class="keyword">import</span> wraps, partial  <span class="comment"># 偏函数partial</span></span><br><span class="line"><span class="keyword">import</span> logging</span><br><span class="line"><span class="comment"># Utility decorator to attach a function as an attribute of obj</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">attach_wrapper</span><span class="params">(obj, func=None)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> func <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">        <span class="keyword">return</span> partial(attach_wrapper, obj)</span><br><span class="line">    setattr(obj, func.__name__, func)</span><br><span class="line">    <span class="keyword">return</span> func</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">logged</span><span class="params">(level, name=None, message=None)</span>:</span></span><br><span class="line">    <span class="string">'''</span></span><br><span class="line"><span class="string">    Add logging to a function. level is the logging</span></span><br><span class="line"><span class="string">    level, name is the logger name, and message is the</span></span><br><span class="line"><span class="string">    log message. If name and message aren't specified,</span></span><br><span class="line"><span class="string">    they default to the function's module and name.</span></span><br><span class="line"><span class="string">    '''</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">decorate</span><span class="params">(func)</span>:</span></span><br><span class="line">        logname = name <span class="keyword">if</span> name <span class="keyword">else</span> func.__module__</span><br><span class="line">        log = logging.getLogger(logname)</span><br><span class="line">        logmsg = message <span class="keyword">if</span> message <span class="keyword">else</span> func.__name__</span><br><span class="line"></span><br><span class="line"><span class="meta">        @wraps(func)</span></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">wrapper</span><span class="params">(*args, **kwargs)</span>:</span></span><br><span class="line">            log.log(level, logmsg)</span><br><span class="line">            <span class="keyword">return</span> func(*args, **kwargs)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Attach setter functions</span></span><br><span class="line"><span class="meta">        @attach_wrapper(wrapper)</span></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">set_level</span><span class="params">(newlevel)</span>:</span></span><br><span class="line">            <span class="keyword">nonlocal</span> level</span><br><span class="line">            level = newlevel</span><br><span class="line"></span><br><span class="line"><span class="meta">        @attach_wrapper(wrapper)</span></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">set_message</span><span class="params">(newmsg)</span>:</span></span><br><span class="line">            <span class="keyword">nonlocal</span> logmsg</span><br><span class="line">            logmsg = newmsg</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> wrapper</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> decorate</span><br><span class="line"></span><br><span class="line"><span class="comment"># Example use</span></span><br><span class="line"><span class="meta">@logged(logging.DEBUG)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">add</span><span class="params">(x, y)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> x + y</span><br><span class="line"></span><br><span class="line"><span class="meta">@logged(logging.CRITICAL, 'example')</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">spam</span><span class="params">()</span>:</span></span><br><span class="line">    print(<span class="string">'Spam!'</span>)</span><br><span class="line"></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">  &gt;&gt;&gt; import logging</span></span><br><span class="line"><span class="string">  &gt;&gt;&gt; logging.basicConfig(level=logging.DEBUG)</span></span><br><span class="line"><span class="string">  &gt;&gt;&gt; add(2, 3)</span></span><br><span class="line"><span class="string">  DEBUG:__main__:add   # 使用默认模块及函数的名称作为msg打印出来</span></span><br><span class="line"><span class="string">  5</span></span><br><span class="line"><span class="string">  &gt;&gt;&gt; # Change the log message</span></span><br><span class="line"><span class="string">  &gt;&gt;&gt; add.set_message('Add called')  # 改变log的message</span></span><br><span class="line"><span class="string">  &gt;&gt;&gt; add(2, 3)</span></span><br><span class="line"><span class="string">  DEBUG:__main__:Add called</span></span><br><span class="line"><span class="string">  5</span></span><br><span class="line"><span class="string">  &gt;&gt;&gt; # Change the log level</span></span><br><span class="line"><span class="string">  &gt;&gt;&gt; add.set_level(logging.WARNING)  # 改变log的level</span></span><br><span class="line"><span class="string">  &gt;&gt;&gt; add(2, 3)</span></span><br><span class="line"><span class="string">  WARNING:__main__:Add called</span></span><br><span class="line"><span class="string">  5</span></span><br><span class="line"><span class="string">  &gt;&gt;&gt;</span></span><br><span class="line"><span class="string">'''</span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h3 id="扩展"><a href="#扩展" class="headerlink" title="扩展"></a>扩展</h3><p>functools.partial是偏函数的意思，目的是将频繁调用函数中的重复内容进行扩展固定，可以查看示例说明： <a href="http://www.imooc.com/article/255115" target="_blank" rel="noopener"><strong>偏函数</strong></a></p>
-<blockquote>
-<p>references: <a href="https://python3-cookbook.readthedocs.io/zh_CN/latest/chapters/p09_meta_programming.html" target="_blank" rel="noopener">https://python3-cookbook.readthedocs.io/zh_CN/latest/chapters/p09_meta_programming.html</a></p>
-</blockquote>
-
-          
+          Python元编程 &amp; 装饰器装饰器
+比如，统计一个函数的执行时间
+123456789101112131415161718192021222324import timefrom funtools import wrapsdef timestatistic(func):  """  Decor
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/09/01/meta-programe-python/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1851,9 +1757,16 @@
       
         
           
-            <h3 id="photo-directly"><a href="#photo-directly" class="headerlink" title="photo directly"></a>photo directly</h3><p><img src="/../../../images/hanzhiyubo.jpg" alt="大宝"><br><img src="/../../../images/sunyuhan.jpg" alt="二宝"></p>
+          photo directly
 
           
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/08/31/my-two-babies/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>

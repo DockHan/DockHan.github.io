@@ -377,43 +377,16 @@
       
         
           
-            <h2 id="树"><a href="#树" class="headerlink" title="树"></a>树</h2><h3 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h3><ul>
-<li>树的高度，也成为了树的深度；比如一个完全二叉树高度为h，能包含的最大元素和最小元素分别是多少？<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">              |    深度0</span></span><br><span class="line"><span class="string">          |      |  深度1</span></span><br><span class="line"><span class="string">        |   |  |   | 深度2</span></span><br><span class="line"><span class="string">        ... ... ... ... </span></span><br><span class="line"><span class="string">'''</span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>所以最大元素为$\sum_{r=0}^{h}2^{r}$,最小元素为$\sum_{r=0}^{h}2^{h-1} + 1$</p>
-<ul>
-<li>二叉树<ul>
-<li>定义：通过递归的方式来定义二叉树，T是定义在有限节点集上的结构，它或者不包含任何节点，或者包含三个不想交的节点集：一个根节点，一颗称为左子树的二叉树，一个称为右子树的二叉树。</li>
-</ul>
-</li>
-<li>满二叉树指的是：所有节点的节点度都为2</li>
-<li>完全k叉树：所有叶节点的深度相同，且所有内部节点的节点度都为K的k叉树。一个高度为h的完全k叉树的内部节点数目为：<script type="math/tex; mode=display">1 + k + k^2 + \cdot + k^{h-1} = \sum_{i = 0}^{h -1}K^i = \frac{k^h - 1}{k - 1}</script></li>
-</ul>
-<h3 id="堆排序"><a href="#堆排序" class="headerlink" title="堆排序"></a>堆排序</h3><ul>
-<li><strong>堆：是一个数值，可以被看成是一个近似的完全二叉树，树上的每一个节点对应数组中的一个元素。除最底层外，该树是完全满的，而且从左向右填充。</strong></li>
-<li><p>表示堆的数组A包含两个属性：A.length给出数组元素的个数，A.head-size表示有多少个元素存储在该数组中。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">                         16</span></span><br><span class="line"><span class="string">                    /            \  </span></span><br><span class="line"><span class="string">              14                     10</span></span><br><span class="line"><span class="string">          /       \                 /   \ </span></span><br><span class="line"><span class="string">      8             7              9      3</span></span><br><span class="line"><span class="string">    /   \          /</span></span><br><span class="line"><span class="string">  2      4        1</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line">A = [<span class="number">16</span>, <span class="number">14</span>, <span class="number">10</span>, <span class="number">8</span>, <span class="number">7</span>, <span class="number">9</span>, <span class="number">3</span>, <span class="number">2</span>, <span class="number">4</span>, <span class="number">1</span>]   <span class="comment"># 对应在数组中的存储结构</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>二叉堆可以分为两种形式： 最大堆和最小堆。除了都满足堆的特性外，在最大堆中除了根节点外，所有节点i都要满足：</p>
-<script type="math/tex; mode=display">[PARENT(i)] \ge A[i]</script><p>最小堆则反之, 最小堆通常被用于构造优先队列。</p>
-<script type="math/tex; mode=display">[PARENT(i)] \le A[i]</script></li>
-<li><strong>相关伪代码</strong><ul>
-<li>MAX_HEAPIFY 用于维护最大堆得重要过程，它输入一个数组A和一个小标，在调用MAX_HEAPIFY的时候，我们假定根节点为LEFT[i]和RIGHT[i]的二叉树都是最大堆，但这是A[i]有可能小于其孩子，就违背了最大堆的特性。 MAX_HEAPIFY通过让A[i]的值在最大堆中逐级下降，从而使得以下标为i的根节点子树重新遵循最大堆的特性。<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">MAX_HEAPIFY</span><span class="params">(A, i)</span>:</span></span><br><span class="line"> l = LEFT[i]</span><br><span class="line"> r = RIGHT[i]</span><br><span class="line"> <span class="keyword">if</span> l &lt;= A.head-size <span class="keyword">and</span> A[l] &gt; A[i]:</span><br><span class="line">   largest = l</span><br><span class="line"> <span class="keyword">else</span>:</span><br><span class="line">   largest = i</span><br><span class="line"> <span class="keyword">if</span> r &lt;= A.head-size <span class="keyword">and</span> A[r] &gt; A[largest]:</span><br><span class="line">   largest = r</span><br><span class="line"> </span><br><span class="line"> <span class="keyword">if</span> largest != i:</span><br><span class="line">   A[r], A[i] = A[i], A[r]  <span class="comment"># swap </span></span><br><span class="line">   MAX_HEAPIFY(A, largest)</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-</ul>
-<h4 id="建堆"><a href="#建堆" class="headerlink" title="建堆"></a><strong>建堆</strong></h4><ul>
-<li>可以利用自底向上的方法使用MAX_HEAPIFY把一个大小为n = A.length的数组A[1..n]转换为最大堆，伪代码如下：<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">BUILD_MAX_HEAD</span><span class="params">(A)</span>:</span></span><br><span class="line">  A.head-size = A.length</span><br><span class="line">  <span class="keyword">for</span> i = [A.length/<span class="number">2</span>] downto i:   <span class="comment"># [A.length/2]向下取整</span></span><br><span class="line">    MAX_HEAPIFY(A, i)</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h4 id="堆排序算法"><a href="#堆排序算法" class="headerlink" title="堆排序算法"></a>堆排序算法</h4><ul>
-<li>初始时候，可以先利用BUILD_MAX_HEAD将输入的A[1,…,n]构建成最大堆，其中n = A.length,因为最大的元素总是在A[1]中，因此通过它与A[n]互换，将A[n]从堆中去掉，在重新构建A[1,….,n-1]的最大堆，从而得到一个递增或者递减的排序数组A，代码如下:<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">HEAD_SORT</span><span class="params">(A)</span>:</span></span><br><span class="line">  BUILD_MAX_HEAD(A)</span><br><span class="line">  <span class="keyword">for</span> i = A.length downto <span class="number">2</span>:</span><br><span class="line">    swap A[<span class="number">1</span>] <span class="keyword">with</span> A[i]</span><br><span class="line">    A.head-size = A.head-size <span class="number">-1</span></span><br><span class="line">    MAX_HEAPIFY(A,<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-
-          
+          树基本概念
+树的高度，也成为了树的深度；比如一个完全二叉树高度为h，能包含的最大元素和最小元素分别是多少？123456'''              |    深度0          |      |  深度1        |   |  |   | 深度2        ... ... ...
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/08/31/tree/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -553,33 +526,21 @@
       
         
           
-            <h2 id="快速排序"><a href="#快速排序" class="headerlink" title="快速排序"></a>快速排序</h2><hr>
-<h3 id="求解分析"><a href="#求解分析" class="headerlink" title="求解分析"></a>求解分析</h3><p>使用分治策略对排序任务进行划分：</p>
-<ul>
-<li>假设输入数组的 <code>A[p, r]</code> </li>
-<li>可以将数组划分为 <code>A[p, q - 1]</code> 和 <code>A[q + 1, r]</code> 使得前一个数组的内容都小于等于A[q],后一个数组的内容都大于等于A[q]</li>
-<li>这样问题就被划分为两个子问题，继续对子数组进行递归调用的过程</li>
-<li><strong>合并</strong>: 由于子数组都是原址排序，所以不需要合并操作，即A[p,r]已经是有序的</li>
-<li><p>伪代码如下</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">QUICKSORT</span><span class="params">(A, p, r)</span>:</span></span><br><span class="line">  <span class="keyword">if</span> p &lt; r:</span><br><span class="line">    q = PARTITION(A, p, r)</span><br><span class="line">    QUICKSORT(A, p, q - <span class="number">1</span>)</span><br><span class="line">    QUICKSORT(A, q + <span class="number">1</span>, r)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>算法的关键是PARTITION过程，它实现了对子数组A[p, r]的划分</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">PARTITION</span><span class="params">(A, p, r)</span>:</span></span><br><span class="line">  <span class="comment"># 选取最有一个作为key</span></span><br><span class="line">  key = A[r]</span><br><span class="line">  <span class="comment"># </span></span><br><span class="line">  i = p - <span class="number">1</span> <span class="comment"># 初始时候i 并不存在，用于下面for循环内部进行比较+1</span></span><br><span class="line">  <span class="keyword">for</span> j <span class="keyword">in</span> range(p, r):</span><br><span class="line">    <span class="keyword">if</span> A[j] &lt;= key:  <span class="comment"># j 指向的value都是大于等于key</span></span><br><span class="line">      i = i + <span class="number">1</span></span><br><span class="line">      A[i], A[j] = A[j], A[i]  <span class="comment"># i 指向的value都是小于等于key</span></span><br><span class="line">  A[i+<span class="number">1</span>], A[r] = A[r], A[i+<span class="number">1</span>]</span><br><span class="line">  <span class="keyword">return</span> i + <span class="number">1</span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h3 id="python-代码实现"><a href="#python-代码实现" class="headerlink" title="python 代码实现"></a>python 代码实现</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> typing <span class="keyword">import</span> List</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">partition</span><span class="params">(sort_list: List[int], start_index: int, end_index: int)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    划分待排序数组为连个子数组</span></span><br><span class="line"><span class="string">    :param sort_list:</span></span><br><span class="line"><span class="string">    :param start_index:</span></span><br><span class="line"><span class="string">    :param end_index:</span></span><br><span class="line"><span class="string">    :return: 分割数组的小标</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    key = sort_list[end_index]</span><br><span class="line">    i = start_index - <span class="number">1</span></span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> range(start_index, end_index):  <span class="comment"># 这里需要注意 range 中end_index是开区间取值，即end_index - 1</span></span><br><span class="line">        <span class="keyword">if</span> sort_list[j] &lt;= key:</span><br><span class="line">            i = i + <span class="number">1</span></span><br><span class="line">            sort_list[i], sort_list[j] = sort_list[j], sort_list[i]</span><br><span class="line">    sort_list[i + <span class="number">1</span>], sort_list[end_index] = sort_list[end_index], sort_list[i + <span class="number">1</span>]</span><br><span class="line">    <span class="keyword">return</span> i + <span class="number">1</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">quick_sort</span><span class="params">(sort_list: List[int], start_index: int, end_index: int)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    快速排序</span></span><br><span class="line"><span class="string">    :param sort_list: 待排序的列表</span></span><br><span class="line"><span class="string">    :param start_index: 列表数组的开始下标</span></span><br><span class="line"><span class="string">    :param end_index: 列表数组的最后一个小标</span></span><br><span class="line"><span class="string">    :return:</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="keyword">if</span> start_index &lt; end_index:</span><br><span class="line">        mid_index = partition(sort_list, start_index, end_index)</span><br><span class="line">        quick_sort(sort_list, start_index, mid_index - <span class="number">1</span>)</span><br><span class="line">        quick_sort(sort_list, mid_index + <span class="number">1</span>, end_index)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">    a = [<span class="number">2</span>, <span class="number">8</span>, <span class="number">7</span>, <span class="number">1</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">4</span>] * <span class="number">100</span></span><br><span class="line">    quick_sort(a, <span class="number">0</span>, len(a) - <span class="number">1</span>)</span><br><span class="line">    print(a)</span><br></pre></td></tr></table></figure>
-<h3 id="算法分析"><a href="#算法分析" class="headerlink" title="算法分析"></a>算法分析</h3><h4 id="最坏的情况"><a href="#最坏的情况" class="headerlink" title="最坏的情况"></a>最坏的情况</h4><ul>
-<li>当每次划分的结果都是所有的数都小于或者大于 key，即数组被划分为n - 1个元素和0个元素时，算法分析公式如下：<script type="math/tex; mode=display">T(n) = T(0) + T(n - 1) + \theta(n)</script></li>
-<li>直观上看，每一次的计算都被累加起来，所以时间复杂度为$\theta(n^{2})$；在最坏的情况下，如果对一个已经排序好的list进行快速排序和插入排序的对比，时间复杂度为快速排序$\theta(n^{2})$, 插入排序为$\theta(n)$.</li>
-</ul>
-<h4 id="最好的划分情况"><a href="#最好的划分情况" class="headerlink" title="最好的划分情况"></a>最好的划分情况</h4><script type="math/tex; mode=display">T(n) = 2T(\frac{n}{2}) + \theta(n)</script><p>时间复杂度为: $\theta(n\lg(n))$</p>
-<h3 id="PARTITION的另外一种常见的划分方式-HOARE-PARITION"><a href="#PARTITION的另外一种常见的划分方式-HOARE-PARITION" class="headerlink" title="PARTITION的另外一种常见的划分方式(HOARE-PARITION)"></a>PARTITION的另外一种常见的划分方式(HOARE-PARITION)</h3><ul>
-<li>伪代码如下<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">HOARE_PARITION</span><span class="params">(A, p, r)</span>:</span></span><br><span class="line">  <span class="string">"""</span></span><br><span class="line"><span class="string">    p, r 是数组A的下标</span></span><br><span class="line"><span class="string">  """</span></span><br><span class="line">  key = A[p]  <span class="comment"># 选取第一个元素的值作为key</span></span><br><span class="line">  i = p + <span class="number">1</span></span><br><span class="line">  j = r</span><br><span class="line">  <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    <span class="keyword">while</span> A[i] &lt;= key:</span><br><span class="line">      i = i + <span class="number">1</span></span><br><span class="line">    <span class="keyword">while</span> A[j] &gt;= key:</span><br><span class="line">      j = j - <span class="number">1</span></span><br><span class="line">    <span class="keyword">if</span> j &gt; i:</span><br><span class="line">      A[j], A[i] = A[i], A[j]</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">      <span class="keyword">return</span> j  <span class="comment"># return j 多多思考</span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h4 id="代码示例"><a href="#代码示例" class="headerlink" title="代码示例"></a>代码示例</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">hoare_partition</span><span class="params">(sort_list: List[int], start_index: int, end_index: int)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    常见的方法，两个指针分别指向数组的第2个和最后一个，进行比较和交换，返回划分的index下标</span></span><br><span class="line"><span class="string">    :param sort_list:</span></span><br><span class="line"><span class="string">    :param start_index:</span></span><br><span class="line"><span class="string">    :param end_index:</span></span><br><span class="line"><span class="string">    :return:</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    key = sort_list[start_index]</span><br><span class="line">    i = start_index + <span class="number">1</span></span><br><span class="line">    j = end_index</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        <span class="keyword">while</span> sort_list[j] &gt;= key <span class="keyword">and</span> j &gt; start_index:  <span class="comment"># j 不能设置大于等于</span></span><br><span class="line">            j = j - <span class="number">1</span></span><br><span class="line">        <span class="keyword">while</span> sort_list[i] &lt;= key <span class="keyword">and</span> i &lt; end_index:  <span class="comment"># 其中i 不能设置小于等于，防止列表出现重复子串时候出现错误</span></span><br><span class="line">            i = i + <span class="number">1</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> j &gt; i:</span><br><span class="line">            sort_list[i], sort_list[j] = sort_list[j], sort_list[i]</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            sort_list[start_index], sort_list[j] = sort_list[j], sort_list[start_index]</span><br><span class="line">            <span class="keyword">return</span> j</span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">quick_sort</span><span class="params">(sort_list: List[int], start_index: int, end_index: int)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    快速排序</span></span><br><span class="line"><span class="string">    :param sort_list: 待排序的列表</span></span><br><span class="line"><span class="string">    :param start_index: 列表数组的开始下标</span></span><br><span class="line"><span class="string">    :param end_index: 列表数组的最后一个小标</span></span><br><span class="line"><span class="string">    :return:</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="keyword">if</span> start_index &lt; end_index:</span><br><span class="line">        <span class="comment"># mid_index = partition(sort_list, start_index, end_index)</span></span><br><span class="line">        mid_index = hoare_partition(sort_list, start_index, end_index)</span><br><span class="line">        quick_sort(sort_list, start_index, mid_index - <span class="number">1</span>)</span><br><span class="line">        quick_sort(sort_list, mid_index + <span class="number">1</span>, end_index)</span><br></pre></td></tr></table></figure>
+          快速排序
+求解分析使用分治策略对排序任务进行划分：
 
-          
+假设输入数组的 A[p, r] 
+可以将数组划分为 A[p, q - 1] 和 A[q + 1, r] 使得前一个数组的内容都小于等于A[q],后一个数组的内容都大于等于A[q]
+这样问题就被划分为两个子问题，继续对子数组进行递归调用的过程
+合并
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/08/29/quick-sort/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -719,22 +680,21 @@
       
         
           
-            <h2 id="游泳学习"><a href="#游泳学习" class="headerlink" title="游泳学习"></a>游泳学习</h2><hr>
-<ul>
-<li>经过霍钊、张磊两位老兄的指导，这个暑期学习游泳的计划可以完成了<br>记录下过程：<ul>
-<li>先熟悉水性，消除在水里的恐惧（泳镜是必须的）</li>
-<li>感受在水中的浮力，这个时候可以不换气在水里扑腾</li>
-<li>学习蛙泳三个步骤的姿势：<ul>
-<li>脚： 收、并、蹬； 注： 这个姿势看是简单，但是也有细节出，比如并这个动作容易被忽略，蹬：动作是像青蛙一项向后下方蹬，这样才能产生浮力让身体前倾，起来换气</li>
-<li>手：并、划、收； 我遇到最大的问题是，手并的时候没有和身体保持平行， 导致划的过程很短，换气的时间就很短</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<p>每周游泳2次左右<del>~<br>昨天坚持了在泳道中四次没有中断的游过去</del>~记录下</p>
+          游泳学习
 
-          
+经过霍钊、张磊两位老兄的指导，这个暑期学习游泳的计划可以完成了记录下过程：
+先熟悉水性，消除在水里的恐惧（泳镜是必须的）
+感受在水中的浮力，这个时候可以不换气在水里扑腾
+学习蛙泳三个步骤的姿势：
+脚： 收、并、蹬； 注： 这个姿势看是简单，但是也有细节出，比如并这个动作容易被忽略，蹬：动
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/08/29/Swiming/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -874,46 +834,19 @@
       
         
           
-            <h2 id="测试开发面试：-Python"><a href="#测试开发面试：-Python" class="headerlink" title="测试开发面试： Python"></a>测试开发面试： Python</h2><hr>
-<h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><ul>
-<li>最近在进行测试开发的面试过程中，习惯性第一个关于Python基本知识的面试题为Python的一个类中 <strong>new</strong>和<strong>init</strong>的却区别和调用顺序，基本上80%的面试者都没有回答上来，因此实际自己也做一个总结：</li>
-</ul>
-<h3 id="实践"><a href="#实践" class="headerlink" title="实践"></a>实践</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">NewInit</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__new__</span><span class="params">(cls, *args, **kwargs)</span>:</span></span><br><span class="line">        print(<span class="string">"__new__ called..."</span>)</span><br><span class="line">        <span class="keyword">return</span> object.__new__(cls)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">        print(<span class="string">"__init__ called...."</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">    new = NewInit()</span><br><span class="line"></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">console out print</span></span><br><span class="line"><span class="string">__new__ called...</span></span><br><span class="line"><span class="string">__init__ called....</span></span><br><span class="line"><span class="string">可以看出，在实例化NewInit 之前，解释器会先调用__new__方法，创建一个class的instance</span></span><br><span class="line"><span class="string">==============================</span></span><br><span class="line"><span class="string">等同于：</span></span><br><span class="line"><span class="string">return object.__new__(NewInit, *args, **kwargs) </span></span><br><span class="line"><span class="string">调用父类的__new__()方法来制造实例</span></span><br><span class="line"><span class="string">'''</span></span><br></pre></td></tr></table></figure>
-<p>再比如<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">NewInitInit</span><span class="params">(NewInit)</span>:</span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">  newnew = NewInitInit()</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">这里实例newnew,实际上调用的是父类的__new__方法来制造对象：</span></span><br><span class="line"><span class="string">return NewInit.__new__(cls, *args, **kwargs)</span></span><br><span class="line"><span class="string">'''</span></span><br></pre></td></tr></table></figure></p>
-<h3 id="使用new涉及Python的单例模式"><a href="#使用new涉及Python的单例模式" class="headerlink" title="使用new涉及Python的单例模式"></a>使用<strong>new</strong>涉及Python的单例模式</h3><ol>
-<li>引言<ul>
-<li>如上所描述，当我们实例化一个对象的时候，虽然我们没有编写<strong>new</strong>方法（大部分情况下），但是解释器是先执行了<strong>new</strong>()来实例化对象，然后交给<strong>init</strong>方法执行，因此我们可以基于这个特点实现单例模式：</li>
-</ul>
-</li>
-<li>实现过程</li>
-</ol>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> threading</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Singleton</span><span class="params">(object)</span>:</span></span><br><span class="line">  _instance_lock = threading.Lock()</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">__init</span><span class="params">(self)</span>:</span></span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line">  </span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">__new__</span><span class="params">(cls, *args, **kwargs)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> hasattr(Singleton, <span class="string">"_instance"</span>):</span><br><span class="line">      <span class="keyword">with</span> Singleton._instance_lock:</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> hasattr(Singleton, <span class="string">"_instance"</span>):</span><br><span class="line">          Singleton._instance = object.__new__(cls)</span><br><span class="line">    <span class="keyword">return</span> Singleton._instance</span><br><span class="line">  </span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">    o1 = Singleton()</span><br><span class="line">    o2 = Singleton()</span><br><span class="line"></span><br><span class="line">    print(o1)</span><br><span class="line">    print(o2)</span><br><span class="line"></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">输出结果：</span></span><br><span class="line"><span class="string">&lt;__main__.Singleton object at 0x000001AE59737C50&gt;</span></span><br><span class="line"><span class="string">&lt;__main__.Singleton object at 0x000001AE59737C50&gt;</span></span><br><span class="line"><span class="string">'''</span></span><br></pre></td></tr></table></figure>
-<ol>
-<li>当然Python实现单例模式有很多种方法，以上这种是比较推荐的，也是和Java, C#等语言相似的一种写法</li>
-</ol>
-<h3 id="扩展"><a href="#扩展" class="headerlink" title="扩展"></a>扩展</h3><ol>
-<li>Python中hasattr(), getattr() setattr()的用法</li>
-<li><p>hasattr(object, name)</p>
-<ul>
-<li>顾名思义：判断object对象中是否存在name属性，这里需要注意的是对Python而言属性包含变量和方法，有则返回True，没有则返回False；需要注意的是name接收的是string类型，无论变量还是方法，传递进去的都是String类型<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span>:</span></span><br><span class="line">_instance = <span class="string">'class_variable'</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">__int__</span><span class="params">(self, name)</span>:</span></span><br><span class="line">    self._name = name</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_name</span><span class="params">(self)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> self._name</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">    print(<span class="literal">True</span> <span class="keyword">if</span> hasattr(A, <span class="string">"_instance"</span>) <span class="keyword">else</span> <span class="literal">False</span>)</span><br><span class="line">    print(<span class="literal">True</span> <span class="keyword">if</span> hasattr(A, <span class="string">"get_name"</span>) <span class="keyword">else</span> <span class="literal">False</span>)</span><br><span class="line">    print(<span class="literal">True</span> <span class="keyword">if</span> hasattr(A, <span class="string">"_name"</span>) <span class="keyword">else</span> <span class="literal">False</span>)</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">True</span></span><br><span class="line"><span class="string">True</span></span><br><span class="line"><span class="string">False</span></span><br><span class="line"><span class="string">'''</span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-<li><p>getattr(object, name[,default])</p>
-<ul>
-<li>获取object对象的属性的值，如果存在则返回属性值，如果不存在分为两种情况，一种是没有default参数时，会直接报错；给定了default参数，若对象本身没有name属性，则会返回给定的default值；如果给定的属性name是对象的方法，则返回的是函数对象，需要调用函数对象来获得函数的返回值；调用的话就是函数对象后面加括号，如func之于func();另外还需要注意，如果给定的方法func()是实例函数，则不能写getattr(A, ‘func’)()，因为fun()是实例函数的话，是不能用A类对象来调用的，应该写成getattr(A(), ‘func’)()；实例函数和类函数的区别可以简单的理解一下，实例函数定义时，直接def func(self):，这样定义的函数只能是将类实例化后，用类的实例化对象来调用；而类函数定义时，需要用@classmethod来装饰，函数默认的参数一般是cls，类函数可以通过类对象来直接调用，而不需要对类进行实例化；<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span>:</span></span><br><span class="line">_instance = <span class="string">'class_variable'</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, name)</span>:</span></span><br><span class="line">    self._name = name</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_name</span><span class="params">(self)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> self._name</span><br><span class="line"></span><br><span class="line"><span class="meta">@staticmethod</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">class_method</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">return</span> <span class="string">"class method"</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">    a = A(<span class="string">"ddd"</span>)</span><br><span class="line">    print(getattr(A, <span class="string">"_instance"</span>, <span class="string">"A_instance"</span>))</span><br><span class="line">    print(getattr(A, <span class="string">"not_has_variable"</span>, <span class="string">"not_has_variable"</span>))</span><br><span class="line">    print(getattr(a, <span class="string">"get_name"</span>)())</span><br><span class="line">    print(getattr(A, <span class="string">"class_method"</span>, <span class="string">"error call class method"</span>)())</span><br><span class="line"></span><br><span class="line"><span class="string">''' </span></span><br><span class="line"><span class="string">console out print:</span></span><br><span class="line"><span class="string">class_variable</span></span><br><span class="line"><span class="string">not_has_variable</span></span><br><span class="line"><span class="string">ddd</span></span><br><span class="line"><span class="string">class method</span></span><br><span class="line"><span class="string">'''</span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-<li><p>setattr(object, name, value)</p>
-<ul>
-<li>给object对象的name属性赋值value，如果对象原本存在给定的属性name，则setattr会更改属性的值为给定的value；如果对象原本不存在属性name，setattr会在对象中创建属性，并赋值为给定的value；<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span>:</span></span><br><span class="line">  _instance = <span class="string">'class_variable'</span></span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, name)</span>:</span></span><br><span class="line">      self._name = name</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">get_name</span><span class="params">(self)</span>:</span></span><br><span class="line">      <span class="keyword">return</span> self._name</span><br><span class="line"></span><br><span class="line"><span class="meta">  @staticmethod</span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">class_method</span><span class="params">()</span>:</span></span><br><span class="line">      <span class="keyword">return</span> <span class="string">"class method"</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">    setattr(A, <span class="string">'_instance'</span>, [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>])</span><br><span class="line">    print(getattr(A, <span class="string">"_instance"</span>))</span><br><span class="line">    setattr(A, <span class="string">'not_exist_instance'</span>, <span class="string">"not_exist_instance"</span>)</span><br><span class="line">    print(getattr(A, <span class="string">"not_exist_instance"</span>))</span><br><span class="line"></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">[1, 2, 3, 4]</span></span><br><span class="line"><span class="string">not_exist_instance</span></span><br><span class="line"><span class="string">'''</span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-</ol>
+          测试开发面试： Python
+背景
+最近在进行测试开发的面试过程中，习惯性第一个关于Python基本知识的面试题为Python的一个类中 new和init的却区别和调用顺序，基本上80%的面试者都没有回答上来，因此实际自己也做一个总结：
 
-          
+实践1234567891011121314151617181
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/08/28/测试开发Python面试/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1053,41 +986,18 @@
       
         
           
-            <h2 id="变量和基本数据类型"><a href="#变量和基本数据类型" class="headerlink" title="变量和基本数据类型"></a>变量和基本数据类型</h2><hr>
-<h3 id="内置类型的机器级表示"><a href="#内置类型的机器级表示" class="headerlink" title="内置类型的机器级表示"></a>内置类型的机器级表示</h3><ol>
-<li><p>通常一个内置类型，比如int在内存中(32bit的处理器)，一般占用4个字节的存储空间（也称为Word), So 取值范围是 $1- 2^32 ——- 2^32$，如果一段for循环如下，会进入死循环：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">for(unsigned int i = 0; i &lt; xxx; i++)</span><br><span class="line">&#123;</span><br><span class="line">  // 当i 超过int的最大范围时， i值%int.MaxValue取模，导致进入死循环</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>变量的初始化<br>复制初始化和直接初始化，如下</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">int a = 10;  // 复制初始化</span><br><span class="line">int b(1024); // 直接初始化</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>尽量使用const<br>const修饰的变量不可被修改，因此必须在定义的时候就进行初始化</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">const int PI = 3.1415926; // PI 不可再被程序的其他位置修改其值</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>引用 reference</p>
-<ul>
-<li>就是对象的另外一个名字，在实际应用中主要用作函数的形式参数；</li>
-<li><p>引用是一种复合类型(compound type)，通过在变量名称前添加&amp;符号来定义</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">int ival = 1024;</span><br><span class="line">int &amp;ref_val = ival; // OK , ref_val refers ival</span><br><span class="line">int &amp;ref_val2;       // error, a reference must be initialized</span><br><span class="line">int &amp;ref_val3 = 10; // error, initializer must be an object</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>引用其实就是一个对象的别名，所有作用在该引用上的操作都会对该引用的对象进行影响。</p>
-</li>
-</ul>
-</li>
-<li><strong>const 引用</strong><ul>
-<li>即可以读取，但是不可修改引用对象的内容 </li>
-</ul>
-</li>
-<li>typedef 名字<ul>
-<li>为了隐藏特定类型的实现，强调类型使用的目的</li>
-<li>为了简化复杂类型的定义，使其更容易理解</li>
-<li>运行一种类型用于多个目的，同事使得每次改类型的目的</li>
-</ul>
-</li>
-<li>Enum 枚举</li>
-</ol>
-
-          
+          变量和基本数据类型
+内置类型的机器级表示
+通常一个内置类型，比如int在内存中(32bit的处理器)，一般占用4个字节的存储空间（也称为Word), So 取值范围是 $1- 2^32 ——- 2^32$，如果一段for循环如下，会进入死循环：
+1234for(unsigned int i = 0;
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/08/27/c-primer-变量和基本类型/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1227,10 +1137,17 @@
       
         
           
-            <h2 id="矩阵复习"><a href="#矩阵复习" class="headerlink" title="矩阵复习"></a>矩阵复习</h2><hr>
-<p>敬请期待</p>
+          矩阵复习
+敬请期待
 
           
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/08/27/index/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1370,60 +1287,27 @@
       
         
           
-            <h2 id="分治策略"><a href="#分治策略" class="headerlink" title="分治策略"></a>分治策略</h2><ul>
-<li><p>三个步骤</p>
-<ol>
-<li>分解(Divide)：将问题划分为规模更小的子问题</li>
-<li>解决(Conquer)：递归的求解出子问题，如果子问题规模足够小，则停止递归，直接求解</li>
-<li>合并(Combine)：将子问题的解组合成原问题的解</li>
-</ol>
-</li>
-<li><p>求解函数</p>
-<script type="math/tex; mode=display">
+          分治策略
+三个步骤
+
+分解(Divide)：将问题划分为规模更小的子问题
+解决(Conquer)：递归的求解出子问题，如果子问题规模足够小，则停止递归，直接求解
+合并(Combine)：将子问题的解组合成原问题的解
+
+
+求解函数
+
 T(n) = 
 \begin{cases}
-    \Omega(n), & if\ n\ =\ 1\ \\
-    2T(\cfrac{n}{2}) + \Omega(n), & if\ n\ >\ 1
-\end{cases}</script><ul>
-<li>如何求解该方法的复杂度为 $\theta(nlgn)$,可以参考如下分解过程<ol>
-<li>假设c用于表示求解规模为1所需要的时间以及在分解合并过程中需要需要的时间</li>
-<li>那么 总体就是cn，分解： $T(\cfrac{n}{2})$ $\cfrac{n}{2}$ —-&gt;继续分解$\cfrac{n}{4}$ $\cfrac{n}{4}$ $\cfrac{n}{4}$ $\cfrac{n}{4}$,依次以$\log_2n$的方式分解</li>
-<li>so 复杂度为 $\theta(nlgn)$</li>
-</ol>
-</li>
-</ul>
-</li>
-<li><p>问题示例</p>
-<ul>
-<li>[x] 最大子串 (maximum subarray)， 假设整个数组的$A[low, high]$</li>
-<li>[ ] 思考如何使用分治策略得到最大子串的一个最优解</li>
-<li><p>回答： 将问题分解为规模更小的几个步骤：比如选取中间mid序号，将子数组问题分解为两个规模尽量相等的子数组， 那么存在如下三种可能</p>
-<ol>
-<li>最大子数组位于$A[low, mid]$之中,因此 $low \le i \le j \le high$</li>
-<li>最大子数组位于$A[mid + 1, high]$之中，因此 $mid \lt i \le j \le high$</li>
-<li>还有一种情况是跨越了中点mid, 因此 $low \le i \le mid \le j \le high$<ul>
-<li>求解第三步骤：实际就是已mid为分隔，分别向两侧计算最大子串后，然后合并即可，伪代码如下，返回为i, j, max_value<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">FIND_MAX_CORSSING_SUBARRAY(A, low, mid, high):</span><br><span class="line">  left_sum = -int.MAX</span><br><span class="line">  sum = 0</span><br><span class="line">  for i = mid downto low:</span><br><span class="line">    sum = sum + A[i]</span><br><span class="line">    if sum &gt; left_sum:</span><br><span class="line">      left_sum = sum</span><br><span class="line">      max_left = i</span><br><span class="line">  </span><br><span class="line">  right_sum = -int.MAX</span><br><span class="line">  sum = 0</span><br><span class="line">  for j = mid + 1 to high:</span><br><span class="line">    sum = sum + A[j]</span><br><span class="line">    if sum &gt; right_sum:</span><br><span class="line">      right_sum = sum</span><br><span class="line">      max_right = j</span><br><span class="line">  return (max_left, max_right, left_sum + right_sum)</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-</ol>
-<ul>
-<li>有了总体的分析，所有程序的伪代码如下<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">FIND_MAXIMUM_SUMARRAY(A, low, high)</span><br><span class="line">  if hight == low:</span><br><span class="line">    return (low, high, A[low])</span><br><span class="line">  else mid = [(low+high)/2]</span><br><span class="line">    (left_low, left_high, left_sum) = FIND_MAXIMUM_SUMARRAY(A, low, mid)</span><br><span class="line">    (right_low, right_high, right_sum) = FIND_MAXIMUM_SUMARRAY(A, mid + 1, high)</span><br><span class="line">    (cross_low, cross_high, cross_sum) = FIND_MAX_CORSSING_SUBARRAY(A, low, mid, high)</span><br><span class="line"></span><br><span class="line">    if left_sum &gt;= right_sum and cross_sum &gt;= cross_sum:</span><br><span class="line">      return (left_low, left_high, left_sum)</span><br><span class="line">    else right_sum &gt;= left_sum and right_sm &gt;= cross_sum:</span><br><span class="line">      return (right_low, right_high, right_sum)</span><br><span class="line">    else return (cross_low, cross_high, cross_sum)</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h3 id="知识扩展"><a href="#知识扩展" class="headerlink" title="知识扩展"></a>知识扩展</h3><ul>
-<li>排列组合问题<ol>
-<li>排列的定义：从n个不同的元素中，任取m($m \lt= n$, m n均为自然数)个数按照一定的顺序排列成一列，叫做从n个不同元素中取出m个元素排成一列； 符号 $A_n^m$ 表示。<script type="math/tex; mode=display">A_n^m = n(n-1)(n-2)\cdots(n-m+1) = \cfrac{n!}{(n-m)!}</script></li>
-<li>组合的定义： 从n个不同的元素中，任取m($m \lt= n$, m n均为自然数)个数组成一个组合，组合是无序的，公式：<script type="math/tex; mode=display">C_n^m = \frac{A_n^m}{m!} = \cfrac{n!}{m!(n-m)!}</script></li>
-</ol>
-</li>
-</ul>
-
-          
+    \Omega(n
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/08/25/分治策略/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1541,55 +1425,26 @@ T(n) =
       
         
           
-            <h2 id="First-Page-for-youself"><a href="#First-Page-for-youself" class="headerlink" title="First Page for youself"></a>First Page for youself</h2><h3 id="混沌开学季"><a href="#混沌开学季" class="headerlink" title="混沌开学季"></a>混沌开学季</h3><ol>
-<li>数学(集合、函数、导数、微积分、概率、线性代数、矩阵…..)<ul>
-<li>高等数学</li>
-<li>线性代数</li>
-<li>概率论</li>
-</ul>
-</li>
-<li>自动驾驶<ul>
-<li>ROS</li>
-<li>language: Python | C plus plus</li>
-<li>Perception test method</li>
-<li>planning test method</li>
-<li>prediction test method</li>
-<li>simulation testing</li>
-</ul>
-</li>
-<li>生活<ul>
-<li>理财</li>
-<li>子女教学</li>
-<li>文学 (随便读读咯….)</li>
-<li>深度思考 (聚焦one thing)</li>
-<li>不停学习</li>
-</ul>
-</li>
-<li>CS学习<ul>
-<li>coding</li>
-<li>team for work money</li>
-<li>web develop</li>
-<li>Real time stream transport by websocket</li>
-</ul>
-</li>
-<li>Heath<ul>
-<li>swiming</li>
-<li>basketball</li>
-</ul>
-</li>
-<li>人工智能<ul>
-<li><a href="https://www.zhihu.com/search?q=黄海广&amp;utm_content=search_suggestion&amp;type=content" target="_blank" rel="noopener">学习流程</a></li>
-<li>numpy</li>
-<li>pandas</li>
-<li>matplotlib</li>
-<li>pyTorch</li>
-<li><a href="https://github.com/fengdu78/lihang-code" target="_blank" rel="noopener">统计学习方法(李航)</a></li>
-<li>机器学习西瓜书</li>
-</ul>
-</li>
-</ol>
+          First Page for youself混沌开学季
+数学(集合、函数、导数、微积分、概率、线性代数、矩阵…..)
+高等数学
+线性代数
+概率论
 
-          
+
+自动驾驶
+ROS
+language: Python | C plus plus
+Perception test method
+planning tes
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/08/24/First-Page/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
