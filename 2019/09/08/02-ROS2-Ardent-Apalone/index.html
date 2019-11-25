@@ -102,13 +102,13 @@
 <meta property="og:site_name" content="On the way">
 <meta property="og:description" content="引用：   古月居 ros1 wiki ros2 wiki ROS2安装说明   ROS2的介绍,与ROS1的区别  ROS (Robot Operating System)机器人操作系统，主要分为两代release: ROS1 (代号 Kinetic/indigo): http://wiki.ros.org ROS2 (代号 Ardent Apolane): http://github.com">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="http://yoursite.com/2019/images/01%20ros2archtecture.png">
-<meta property="og:image" content="http://yoursite.com/2019/images/02%20ros2communication.png">
-<meta property="og:updated_time" content="2019-09-08T08:41:10.482Z">
+<meta property="og:image" content="http://yoursite.com/images/01%20ros2archtecture.png">
+<meta property="og:image" content="http://yoursite.com/images/02%20ros2communication.png">
+<meta property="og:updated_time" content="2019-11-25T15:26:17.836Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="02 ROS2 Ardent Apalone">
 <meta name="twitter:description" content="引用：   古月居 ros1 wiki ros2 wiki ROS2安装说明   ROS2的介绍,与ROS1的区别  ROS (Robot Operating System)机器人操作系统，主要分为两代release: ROS1 (代号 Kinetic/indigo): http://wiki.ros.org ROS2 (代号 Ardent Apolane): http://github.com">
-<meta name="twitter:image" content="http://yoursite.com/2019/images/01%20ros2archtecture.png">
+<meta name="twitter:image" content="http://yoursite.com/images/01%20ros2archtecture.png">
 
 
 
@@ -397,7 +397,7 @@
 <li>支持实时控制<br>ROS2还加入了实时控制的支持，可以提高控制的时效性和整体机器人的性能。</li>
 <li>跨系统平台支持<br>ROS2不止能运行在Linux系统之上，还增加了对Windows和MACOS等系统的支持，让开发者的选择更加自由。</li>
 </ol>
-<h3 id="ROS2的架构与ROS1的区别"><a href="#ROS2的架构与ROS1的区别" class="headerlink" title="ROS2的架构与ROS1的区别"></a>ROS2的架构与ROS1的区别</h3><p><img src="../../../images/01&#32;ros2archtecture.png" alt="ROS2架构"></p>
+<h3 id="ROS2的架构与ROS1的区别"><a href="#ROS2的架构与ROS1的区别" class="headerlink" title="ROS2的架构与ROS1的区别"></a>ROS2的架构与ROS1的区别</h3><p><img src="/../../../images/01&#32;ros2archtecture.png" alt="ROS2架构"></p>
 <ol>
 <li>OS层<br>ROS1主要构建于Linux系统之上，ROS2带来了改变，支持构建的系统包括Linux、Windows、Mac、RTOS，甚至没有操作系统的裸机。</li>
 <li><p>中间件<br>ROS中最重要的一个概念就是基于发布/订阅模型的“节点”，可以让开发者并行开发低耦合的功能模块，并且便于二次复用。ROS1的通讯系统基于TCPROS/UDPROS，而ROS2的通讯系统基于DDS。DDS是一种分布式实时系统中数据发布/订阅的标准解决方案，下一小节会具体讲解。ROS2内部提供了DDS的抽象层实现，用户不需要关注底层DDS的提供厂家。</p>
@@ -406,7 +406,7 @@
 <li>应用层<br>ROS1强依赖于ROS Master，可以想像一旦Master宕机，整个系统会面临如何的窘境。但是从右边ROS2的架构中我们可以发现，之前让人耿耿于怀的Master终于消失了，节点之间使用一种称为“Discovery”的发现机制来获取彼此的信息。<br>3.1 ROS2的核心——DDS<br>DDS，Data Distribution Service，即数据分发服务，2004年由对象管理组织OMG（Object Management Group）发布，是一种专门为实时系统设计的数据分发/订阅标准。</li>
 </ol>
 <p><code>DDS最早应用于美国海军， 解决舰船复杂网络环境中大量软件升级的兼容性问题，目前已经成为美国国防部的强制标准，同时广泛应用于国防、民航、工业控制等领域，成为分布式实时系统中数据发布/订阅的标准解决方案。其技术核心是以数据为核心的发布/订阅模型（Data-Centric Publish-Subscribe ，DCPS），这种DCPS模型创建了一个“全局数据空间”（global data space）的概念，所有独立的应用都可以访问
-在DDS中，每一个发布者或者订阅者都称为参与者（participant），类似于ROS中节点的概念。每一个参与者都可以使用某种定义好的数据类型来读写全局数据空间。</code><br>4 <strong>ROS2的通讯模型</strong><br>ROS1 主要是基于topic service等通讯机制，ROS2主要是基于DDS(Data Distribution Service), 所以通讯模型相对会复杂一些：<br><img src="../../../images/02&#32;ros2communication.png" alt><br>ROS2的通讯模型有以下几个关键概念：</p>
+在DDS中，每一个发布者或者订阅者都称为参与者（participant），类似于ROS中节点的概念。每一个参与者都可以使用某种定义好的数据类型来读写全局数据空间。</code><br>4 <strong>ROS2的通讯模型</strong><br>ROS1 主要是基于topic service等通讯机制，ROS2主要是基于DDS(Data Distribution Service), 所以通讯模型相对会复杂一些：<br><img src="/../../../images/02&#32;ros2communication.png" alt="通讯模型"><br>ROS2的通讯模型有以下几个关键概念：</p>
 <p>4.1. <strong>参与者（Domain Participant）</strong><br>  一个参与者Participant就是一个容器，对应于一个使用DDS的用户，任何DDS的用户都必须通过Participant来访问全局数据空间。</p>
 <p>4.2. <strong>发布者（Publisher）</strong><br>  数据发布的执行者，支持多种数据类型的发布，可以与多个数据写入器（DataWriter）相联，发布一种或多种主题（Topic）的消息。</p>
 <p>4.3. <strong>订阅者（Subscriber）</strong><br>  数据订阅的执行者，支持多种数据类型的订阅，可以与多个数据读取器（DataReader）相联，订阅一种或多种主题（Topic）的消息。</p>
@@ -535,7 +535,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-count">20</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
@@ -546,7 +546,7 @@
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-count">10</span>
                 <span class="site-state-item-name">categories</span>
               </a>
             </div>
@@ -557,7 +557,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">18</span>
+                <span class="site-state-item-count">20</span>
                 <span class="site-state-item-name">tags</span>
               </a>
             </div>
